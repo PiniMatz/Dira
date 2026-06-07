@@ -3,263 +3,345 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#0f172a">
+  <meta name="theme-color" content="#090d16">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="דירה בהנחה">
-  <title>דירה בהנחה — ניתוח סיכויים</title>
+  <title>דירה בהנחה — ניתוח סיכויים ומילואים</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-<div id="app">
+  
+  <!-- Glowing Background Orbs -->
+  <div class="glow-orb orb-1"></div>
+  <div class="glow-orb orb-2"></div>
+  <div class="glow-orb orb-3"></div>
 
-  <header class="app-header">
-    <span class="header-title">דירה בהנחה 🏠</span>
-    <div style="display:flex;gap:4px;align-items:center">
-      <button class="btn-icon" id="refresh-btn" title="רענן נתונים מהאתר">🔄</button>
-      <button class="btn-icon" id="settings-btn" title="הגדרות מחירי שוק">⚙️</button>
-    </div>
-  </header>
+  <div id="app" class="glass-container">
 
-  <!-- Reservist slider bar -->
-  <div class="slider-bar">
-    <label class="slider-label" title="הנחה לגבי כמה אחוז מסך הנרשמים הם משרתי מילואים פעילים מזכים (כמוך). ספירת מתחרי המילואים מוסתרת עד לסגירת ההגרלה — זהו פרמטר הערכה. ככל שתניח פחות מתחרים (סליידר שמאלה), הסיכוי שלך עולה">
-      אחוז משרתי מילואים פעילים שנרשמו
-      <span id="slider-pct">15%</span>
-    </label>
-    <input type="range" id="reservist-slider" min="5" max="40" value="15" step="1">
-    <span class="slider-hint">⟵ אופטימי &nbsp;&nbsp; שמרני ⟶</span>
-  </div>
+    <header class="app-header">
+      <div class="header-logo">
+        <span class="header-icon">🏠</span>
+        <span class="header-title">דירה בהנחה <span class="header-badge">אנליטיקס</span></span>
+      </div>
+      <div class="header-actions">
+        <button class="btn-header" id="refresh-btn" title="רענן נתונים מהאתר">
+          <span class="btn-text">רענן נתונים</span>
+          <span class="btn-icon">🔄</span>
+        </button>
+        <button class="btn-header" id="settings-btn" title="הגדרות מחירי שוק">
+          <span class="btn-text">מחירי שוק</span>
+          <span class="btn-icon">⚙️</span>
+        </button>
+      </div>
+    </header>
 
-  <div id="main">
-
-    <!-- Tab: Lotteries -->
-    <div id="tab-lotteries" class="tab-pane active">
-      <div class="filters-row" id="filters-row">
-        <div id="city-chips" class="city-chips"></div>
-        <div class="filter-toggles">
-          <label class="filter-chip" title="הצג רק הגרלות שיש בהן מכסה ייעודית למשרתי מילואים פעילים (~25% מהדירות)">
-            <input type="checkbox" id="filter-reservist"> יש מכסת מילואים
-          </label>
-          <label class="filter-chip" title="הסתר הגרלות שמיועדות לקהילה דתית בלבד — פרויקטים שחיים בהם כרוכים בנורמות אורח חיים דתיות">
-            <input type="checkbox" id="filter-no-religious"> ללא קהילתי
-          </label>
-          <input type="number" id="filter-days" class="filter-days-input"
-            placeholder="מקס׳ ימים לסגירה"
-            title="הצג רק הגרלות שתאריך סיום הרישום שלהן הוא בתוך X ימים מהיום — שימושי כשרוצים לראות מה דחוף להחלטה"
-            min="1" max="365">
-          <button class="btn-clear" id="clear-filters">נקה הכל</button>
+    <!-- Interactive Top Info Grid -->
+    <div class="dashboard-top-section">
+      <!-- Reservist Slider Widget -->
+      <div class="slider-widget glass-card">
+        <div class="slider-header">
+          <div class="slider-title-wrap">
+            <span class="slider-icon">🎗️</span>
+            <span class="slider-title">אחוז משרתי המילואים שנרשמו</span>
+          </div>
+          <span class="slider-badge" id="slider-pct">15%</span>
+        </div>
+        <div class="slider-control-wrap">
+          <input type="range" id="reservist-slider" min="5" max="40" value="15" step="1">
+          <div class="slider-labels">
+            <span>← אופטימי (פחות מתחרים)</span>
+            <span>שמרני (יותר מתחרים) →</span>
+          </div>
         </div>
       </div>
-      <div class="sort-row">
-        <span class="sort-label">מיין לפי:</span>
-        <button class="sort-btn active" data-sort="pini_odds">סיכוי שלי</button>
-        <button class="sort-btn" data-sort="baseline_odds">סיכוי בסיס</button>
-        <button class="sort-btn" data-sort="discount">הנחה%</button>
-        <button class="sort-btn" data-sort="price">מחיר/מ׳</button>
-        <button class="sort-btn" data-sort="city">עיר</button>
-      </div>
-      <div id="lottery-table-wrap">
-        <table id="lottery-table">
-          <thead>
-            <tr>
-              <th>עיר / שכונה</th>
-              <th title="מספר הדירות המיועדות לזכאים בהגרלה זו">זכאים</th>
-              <th title="מתוכן: מכסה ייעודית למשרתי מילואים פעילים (לא לוחמים). כ-25% מהדירות לזכאים. אתה מתחרה על מכסה זו תחילה, ואם לא זכית — ממשיך לבריכה הפתוחה">מילואים</th>
-              <th title="הסיכוי שלך לזכות, בהתחשב בעדיפות המילואים: שלב א׳ — תחרות על מכסת המילואים הפעילים; שלב ב׳ — אם לא זכית, ממשיך לבריכה הפתוחה. מבוסס על ההנחה שהוגדרה בסליידר">סיכוי שלי</th>
-              <th title="סיכוי לזכות ללא עדיפות מילואים: פשוט מספר הדירות לזכאים חלקי סה״כ המשתתפים">בסיס</th>
-              <th title="מחיר למטר רבוע בהגרלת הדירה בהנחה — המחיר שתשלם אם תזכה">₪/מ׳</th>
-              <th title="הנחה משוערת ביחס למחיר השוק החופשי לפי עיר (ממוצע דירת 4 חדרים, מדדירות, יוני 2026)">הנחה%</th>
-              <th title="סה״כ נרשמים להגרלה זו. אם יש נתון ׳משתתפים מאומתים׳ — הוא משמש כמכנה לחישוב הסיכויים (מדויק יותר)">רשומים</th>
-              <th title="כמה ימים נותרו עד לסגירת הרישום להגרלה זו. אדום = פחות מ-7 ימים, צהוב = פחות מ-14">ימים</th>
-            </tr>
-          </thead>
-          <tbody id="lottery-tbody"></tbody>
-        </table>
-      </div>
-      <div id="lottery-empty" class="empty-state" style="display:none">לא נמצאו הגרלות</div>
-    </div>
 
-    <!-- Tab: By City -->
-    <div id="tab-cities" class="tab-pane">
-      <div class="sort-row">
-        <span class="sort-label">מיין לפי:</span>
-        <button class="sort-btn active" data-csort="agg_odds">סיכוי מצטבר</button>
-        <button class="sort-btn" data-csort="best_odds">סיכוי מיטבי</button>
-        <button class="sort-btn" data-csort="discount">הנחה%</button>
-        <button class="sort-btn" data-csort="price">מחיר/מ׳</button>
-      </div>
-      <div id="city-cards"></div>
-    </div>
-
-    <!-- Tab: Sweet Spot -->
-    <div id="tab-scatter" class="tab-pane">
-      <p class="scatter-hint">ציר X = סיכוי שלי (%) &nbsp;·&nbsp; ציר Y = הנחה% &nbsp;·&nbsp; גודל = דירות זכאים &nbsp;·&nbsp; העבר עכבר לפרטים</p>
-      <div id="scatter-wrap">
-        <svg id="scatter-svg" xmlns="http://www.w3.org/2000/svg"></svg>
-        <div id="scatter-tooltip" class="scatter-tooltip"></div>
+      <!-- Dynamic Summary Cards -->
+      <div class="summary-cards">
+        <div class="stat-card glass-card">
+          <div class="stat-icon-wrap bg-blue-glow">📋</div>
+          <div class="stat-content">
+            <span class="stat-label">הגרלות פתוחות</span>
+            <span class="stat-val" id="stat-total-lotteries">—</span>
+          </div>
+        </div>
+        <div class="stat-card glass-card">
+          <div class="stat-icon-wrap bg-green-glow">🎯</div>
+          <div class="stat-content">
+            <span class="stat-label">סיכוי מצטבר מירבי</span>
+            <span class="stat-val text-green" id="stat-best-odds">—</span>
+          </div>
+        </div>
+        <div class="stat-card glass-card">
+          <div class="stat-icon-wrap bg-yellow-glow">₪</div>
+          <div class="stat-content">
+            <span class="stat-label">גובה הנחה ממוצע</span>
+            <span class="stat-val text-yellow" id="stat-avg-discount">—</span>
+          </div>
+        </div>
+        <div class="stat-card glass-card">
+          <div class="stat-icon-wrap bg-purple-glow">👥</div>
+          <div class="stat-content">
+            <span class="stat-label">דירות למילואים פעילים</span>
+            <span class="stat-val text-purple" id="stat-reservist-apts">—</span>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Tab: Formulas -->
-    <div id="tab-formulas" class="tab-pane">
+    <!-- Main Content Area -->
+    <div id="main">
 
-      <div class="formula-section">
-        <div class="formula-section-title">סדר שלבי ההגרלה</div>
-        <p class="formula-desc">
-          כל הגרלה מתנהלת ב-5 שלבים עוקבים. מי שלא זוכה בשלבו עובר אוטומטית לשלב הבא.
-          הדירות בכל שלב מוגרלות רק בין הזכאים לאותה קבוצה.
-        </p>
-        <ul class="stage-list">
-          <li><span class="stage-num">1</span><span class="stage-label">נכים רתוקים <small>(ah דירות)</small></span></li>
-          <li><span class="stage-num">2</span><span class="stage-label">לוחמי מילואים — 60+ ימי שירות מ-7.10.23 <small>(ac דירות)</small></span></li>
-          <li><span class="stage-num mine">3</span><span class="stage-label"><strong>משרתי עורף — מילואים לא-לוחמים</strong> <small>(ar דירות) ← השלב שלך</small></span></li>
-          <li><span class="stage-num">4</span><span class="stage-label">בני מקום — תושבי היישוב <small>(al דירות)</small></span></li>
-          <li><span class="stage-num">5</span><span class="stage-label">הגרלה כללית — כל שאר הזכאים <small>(ao דירות)</small></span></li>
-        </ul>
-        <p class="formula-desc" style="margin-top:10px">
-          תחשוב על זה כתור בן חמישה שלבים. כל קבוצה שולפת קודם מהמכסה שלה. מי שלא זכה — עובר אוטומטית לשלב הבא בלי לעשות כלום. הזוכים "יוצאים מהמשחק"; כולם אחרים ממשיכים. כך השיטה נותנת עדיפות מבלי לסגור את הדלת בפני אף אחד.
-        </p>
-        <p class="formula-note">
-          מסלול שלך: שלב 3 ← אם לא זכית → שלב 5. אין עדיפות בתוך שלב 5 — כולם מתחרים שווה.
-        </p>
+      <!-- Tab: Lotteries -->
+      <div id="tab-lotteries" class="tab-pane active">
+        <!-- Interactive Filters Bar -->
+        <div class="filters-container glass-card">
+          <div class="filters-header">
+            <span class="filters-title">🔎 סינון ומיון הגרלות</span>
+            <button class="btn-clear" id="clear-filters">נקה הכל</button>
+          </div>
+          <div class="filters-content">
+            <div class="city-chips-wrap">
+              <span class="filter-label">סינון לפי עיר:</span>
+              <div id="city-chips" class="city-chips"></div>
+            </div>
+            <div class="filter-actions-row">
+              <div class="filter-checkboxes">
+                <label class="checkbox-chip">
+                  <input type="checkbox" id="filter-reservist">
+                  <span class="checkbox-custom"></span>
+                  יש מכסת מילואים
+                </label>
+                <label class="checkbox-chip">
+                  <input type="checkbox" id="filter-no-religious">
+                  <span class="checkbox-custom"></span>
+                  ללא הגרלות קהילתיות
+                </label>
+              </div>
+              <div class="filter-inputs">
+                <div class="input-with-label">
+                  <span>מקס׳ ימים לסגירה:</span>
+                  <input type="number" id="filter-days" class="filter-days-input" placeholder="ללא הגבלה" min="1" max="365">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sort Bar -->
+        <div class="sort-container">
+          <span class="sort-label">מיין הגרלות לפי:</span>
+          <div class="sort-buttons">
+            <button class="sort-btn active" data-sort="pini_odds">
+              <span class="sort-icon">🎯</span>סיכוי שלי
+            </button>
+            <button class="sort-btn" data-sort="baseline_odds">
+              <span class="sort-icon">📊</span>סיכוי בסיס
+            </button>
+            <button class="sort-btn" data-sort="discount">
+              <span class="sort-icon">₪</span>הנחה%
+            </button>
+            <button class="sort-btn" data-sort="price">
+              <span class="sort-icon">💰</span>מחיר/מ׳
+            </button>
+            <button class="sort-btn" data-sort="city">
+              <span class="sort-icon">🏙️</span>עיר
+            </button>
+          </div>
+        </div>
+
+        <!-- Desktop Lottery Table Card -->
+        <div id="lottery-table-wrap" class="table-card glass-card">
+          <table id="lottery-table">
+            <thead>
+              <tr>
+                <th>עיר / שכונה</th>
+                <th title="דירות המיועדות לזכאים בהגרלה">דירות זכאים</th>
+                <th title="דירות השמורות למשרתי מילואים פעילים (עדיפות)">מכסת מילואים</th>
+                <th title="הסיכוי המשוער שלך לזכות (כולל עדיפות מילואים)">סיכוי שלי</th>
+                <th title="סיכוי לזכות ללא עדיפויות מילואים">סיכוי בסיס</th>
+                <th title="מחיר למטר רבוע בפרויקט">מחיר/מ׳ (הגרלה)</th>
+                <th title="אחוז הנחה משוער ממחיר השוק החופשי בעיר">הנחה משוק</th>
+                <th title="סה״כ נרשמים מאומתים / רשומים">רשומים</th>
+                <th title="ימים שנותרו עד לסגירת הרישום">ימים לסגירה</th>
+              </tr>
+            </thead>
+            <tbody id="lottery-tbody"></tbody>
+          </table>
+          <div id="lottery-empty" class="empty-state" style="display:none">
+            <div class="empty-icon">📂</div>
+            <div class="empty-text">לא נמצאו הגרלות התואמות את הסינון הנוכחי</div>
+          </div>
+        </div>
       </div>
 
-      <div class="formula-section">
-        <div class="formula-section-title">סיכוי בסיס</div>
-        <p class="formula-desc">מה היה הסיכוי שלך לו כולם היו מתחרים שווה, ללא עדיפות קבוצתית.</p>
-        <div class="formula-box">סיכוי בסיס = A / N</div>
-        <p class="formula-desc" style="margin-top:10px">
-          תחשוב על הגרלה פשוטה של כרטיסים בכובע: יש 100 כרטיסי זכייה ו-10,000 משתתפים — כל אחד מקבל סיכוי של 1%. זה הבסיס לפני שמביאים בחשבון עדיפויות קבוצתיות. בפועל הסיכוי שלך גבוה יותר הודות למכסת המילואים.
-        </p>
-        <table class="var-table">
-          <tr><td>A</td><td>מספר הדירות המוגרלות לזכאים (apartments_for_eligible)</td></tr>
-          <tr><td>N</td><td>סה״כ נרשמים להגרלה (participants_count אם קיים, אחרת registrants)</td></tr>
-        </table>
+      <!-- Tab: By City -->
+      <div id="tab-cities" class="tab-pane">
+        <div class="sort-container">
+          <span class="sort-label">מיין ערים לפי:</span>
+          <div class="sort-buttons">
+            <button class="sort-btn active" data-csort="agg_odds">
+              <span class="sort-icon">🎯</span>סיכוי מצטבר
+            </button>
+            <button class="sort-btn" data-csort="best_odds">
+              <span class="sort-icon">🏆</span>סיכוי מיטבי
+            </button>
+            <button class="sort-btn" data-csort="discount">
+              <span class="sort-icon">₪</span>הנחה%
+            </button>
+            <button class="sort-btn" data-csort="price">
+              <span class="sort-icon">💰</span>מחיר/מ׳
+            </button>
+          </div>
+        </div>
+        <div id="city-cards" class="city-cards-grid"></div>
       </div>
 
-      <div class="formula-section">
-        <div class="formula-section-title">סיכוי שלי — מילואים עורף (לא לוחם)</div>
-        <p class="formula-desc">
-          חישוב דו-שלבי: תחילה מנסה לזכות במכסת המילואים (שלב 3), ואם לא — ממשיך להגרלה הכללית (שלב 5).
-        </p>
-        <p class="formula-desc">
-          יש לך שתי הזדמנויות לזכות. ראשית אתה נכנס לבריכה קטנה ובלעדית: רק משרתי מילואים מתחרים ביניהם על הדירות השמורות להם — הסיכוי גבוה יותר כי המתחרים פחות. אם לא זכית שם, אתה אוטומטית נזרק לבריכה הגדולה עם כולם. הנוסחה מחשבת: "מה הסיכוי שאזכה בסיבוב הראשון? ואם לא — מה הסיכוי בסיבוב השני?" ומחברת את שניהם.
-        </p>
-        <div class="formula-box">━━ שלב 3: מכסת משרתי עורף ━━
+      <!-- Tab: Sweet Spot -->
+      <div id="tab-scatter" class="tab-pane">
+        <div class="chart-card glass-card">
+          <div class="chart-header">
+            <span class="chart-title">🎯 מפת ה-Sweet Spot</span>
+            <span class="chart-subtitle">איתור הפרויקטים הכלכליים ביותר בעלי הסיכוי הגבוה ביותר</span>
+          </div>
+          <p class="scatter-hint">ציר X = סיכוי שלי (%) &nbsp;·&nbsp; ציר Y = הנחה% &nbsp;·&nbsp; גודל בועה = דירות זכאים &nbsp;·&nbsp; מעבר עכבר לפרטים</p>
+          <div id="scatter-wrap">
+            <svg id="scatter-svg" xmlns="http://www.w3.org/2000/svg"></svg>
+            <div id="scatter-tooltip" class="scatter-tooltip"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Formulas -->
+      <div id="tab-formulas" class="tab-pane">
+        <div class="formulas-grid">
+          
+          <div class="formula-section glass-card">
+            <div class="formula-section-title">📊 סדר שלבי ההגרלה</div>
+            <p class="formula-desc">
+              כל הגרלה מתנהלת ב-5 שלבים עוקבים. מי שלא זוכה בשלבו עובר אוטומטית לשלב הבא.
+              הדירות בכל שלב מוגרלות רק בין הזכאים לאותה קבוצה.
+            </p>
+            <ul class="stage-list">
+              <li><span class="stage-num">1</span><span class="stage-label">נכים רתוקים <small>(ah דירות)</small></span></li>
+              <li><span class="stage-num">2</span><span class="stage-label">לוחמי מילואים — 60+ ימי שירות מ-7.10.23 <small>(ac דירות)</small></span></li>
+              <li><span class="stage-num mine">3</span><span class="stage-label"><strong>משרתי עורף — מילואים לא-לוחמים</strong> <small>(ar דירות) ← השלב שלך</small></span></li>
+              <li><span class="stage-num">4</span><span class="stage-label">בני מקום — תושבי היישוב <small>(al דירות)</small></span></li>
+              <li><span class="stage-num">5</span><span class="stage-label">הגרלה כללית — כל שאר הזכאים <small>(ao דירות)</small></span></li>
+            </ul>
+            <p class="formula-note">
+              מסלול שלך: שלב 3 ← אם לא זכית ← שלב 5. אין עדיפות בתוך שלב 5 — כולם מתחרים שווה.
+            </p>
+          </div>
+
+          <div class="formula-section glass-card">
+            <div class="formula-section-title">📐 סיכוי בסיס</div>
+            <p class="formula-desc">הסיכוי התאורטי לזכייה במידה וכולם היו מתחרים בצורה שווה, ללא עדיפות לקבוצות עדיפות.</p>
+            <div class="formula-box">סיכוי בסיס = A / N</div>
+            <table class="var-table">
+              <tr><td>A</td><td>מספר הדירות המוגרלות לזכאים (apartments_for_eligible)</td></tr>
+              <tr><td>N</td><td>סה״כ נרשמים (participants_count אם קיים, אחרת registrants)</td></tr>
+            </table>
+          </div>
+
+          <div class="formula-section glass-card">
+            <div class="formula-section-title">🛡️ סיכוי שלי — מילואים עורף (לא לוחם)</div>
+            <p class="formula-desc">
+              חישוב דו-שלבי: סיכוי לזכות בשלב 3, ובמקרה של הפסד - סיכוי לזכות בהגרלה הכללית (שלב 5).
+            </p>
+            <div class="formula-box">━━ שלב 3: מכסת משרתי עורף ━━
 R  = max(ar,  p × N − ac)
-P1 = ar / R            [אם ar > 0, אחרת P1 = 0]
+P1 = ar / R            [אם ar > 0]
 
-━━ שלב 5: הגרלה כללית (אם לא זכית בשלב 3) ━━
+━━ שלב 5: הגרלה כללית ━━
 openComp = max(ao,  N − (ah + ac + ar + al))
-P2 = ao / openComp     [אם ao > 0, אחרת P2 = 0]
+P2 = ao / openComp     [אם ao > 0]
 
 ━━ סיכוי כולל ━━
 סיכוי שלי = P1 + (1 − P1) × P2</div>
-        <table class="var-table">
-          <tr><td>ar</td><td>דירות מוקצות למשרתי עורף (reserve_active_units)</td></tr>
-          <tr><td>ac</td><td>דירות מוקצות ללוחמי מילואים (reserve_combat_units)</td></tr>
-          <tr><td>ah</td><td>דירות מוקצות לנכים (handicapped_units)</td></tr>
-          <tr><td>al</td><td>דירות מוקצות לבני מקום (local_housing_units)</td></tr>
-          <tr><td>ao</td><td>דירות בהגרלה הכללית = A − ah − ac − ar − al</td></tr>
-          <tr><td>p</td><td>הנחת שיעור משרתי מילואים מתוך הנרשמים (הסליידר, ברירת מחדל 15%)</td></tr>
-          <tr><td>R</td><td>מספר מתחרים משוער בשלב 3: כלל משרתי המילואים (p×N) פחות מי שזכה כבר בשלב 2 (ac)</td></tr>
-          <tr><td>openComp</td><td>מתחרים בשלב 5: כל הנרשמים פחות זוכי שלבים 1–4</td></tr>
-        </table>
-        <p class="formula-note">
-          ⚠️ מספר מתחרי המילואים (R) מוסתר עד לסגירת ההגרלה — לכן p הוא הערכה בלבד. הסליידר מאפשר לבחון רגישות לפרמטר זה.<br>
-          לוחמי מילואים שלא זכו בשלב 2 מצטרפים לשלב 3 כמתחרים נוספים — לכן מחסירים את ac מ-p×N.
-        </p>
+            <table class="var-table">
+              <tr><td>ar</td><td>דירות מוקצות למילואים עורף (reserve_active_units)</td></tr>
+              <tr><td>ac</td><td>דירות מוקצות ללוחמי מילואים (reserve_combat_units)</td></tr>
+              <tr><td>ao</td><td>דירות בהגרלה הכללית = A − ah − ac − ar − al</td></tr>
+              <tr><td>p</td><td>הנחת אחוז מילואים (הסליידר, ברירת מחדל 15%)</td></tr>
+            </table>
+          </div>
+
+          <div class="formula-section glass-card">
+            <div class="formula-section-title">📈 סיכוי מצטבר בעיר</div>
+            <p class="formula-desc">
+              הסתברות לזכייה לפחות באחד הפרויקטים בעיר מסוימת במידה ונרשמים לכולם.
+            </p>
+            <div class="formula-box">סיכוי מצטבר = 1 − ∏ (1 − Pᵢ)</div>
+            <table class="var-table">
+              <tr><td>Pᵢ</td><td>הסיכוי שלי בהגרלה i באותה עיר</td></tr>
+              <tr><td>∏</td><td>מכפלה על כל ההגרלות בעיר</td></tr>
+            </table>
+          </div>
+
+        </div>
       </div>
 
-      <div class="formula-section">
-        <div class="formula-section-title">סיכוי מצטבר בעיר</div>
-        <p class="formula-desc">
-          הסתברות לזכות באחת מהגרלות העיר לפחות, בהנחה שהגרלות עצמאיות זו מזו.
-        </p>
-        <div class="formula-box">סיכוי מצטבר = 1 − ∏ᵢ (1 − Pᵢ)</div>
-        <p class="formula-desc" style="margin-top:10px">
-          אם יש בעיר 4 הגרלות, אתה לא קונה כרטיס אחד — אתה קונה 4. הטריק: לא מחברים סיכויים ישירות (זה מגזים), אלא מחשבים את הסיכוי להפסיד בכולן ומחסירים מ-1. אם הסיכוי להפסיד בכל הגרלה הוא 97%, הסיכוי להפסיד בשתי הגרלות הוא 97%×97% = 94.1% — כלומר הסיכוי לזכות באחת לפחות הוא 5.9%.
-        </p>
-        <table class="var-table">
-          <tr><td>Pᵢ</td><td>הסיכוי שלי בהגרלה i באותה עיר</td></tr>
-          <tr><td>∏</td><td>מכפלה על כל ההגרלות הפעילות בעיר</td></tr>
-        </table>
-        <p class="formula-note">
-          דוגמה: שתי הגרלות בעיר עם סיכוי 3% כל אחת → סיכוי מצטבר = 1 − (0.97 × 0.97) ≈ 5.9%.
-        </p>
+    </div><!-- #main -->
+
+    <!-- Navigation Tabs -->
+    <nav class="bottom-nav">
+      <button class="nav-tab active" data-tab="lotteries">
+        <span class="nav-icon">📋</span><span>טבלת הגרלות</span>
+      </button>
+      <button class="nav-tab" data-tab="cities">
+        <span class="nav-icon">🏙️</span><span>ניתוח לפי עיר</span>
+      </button>
+      <button class="nav-tab" data-tab="scatter">
+        <span class="nav-icon">🎯</span><span>Sweet Spot</span>
+      </button>
+      <button class="nav-tab" data-tab="formulas">
+        <span class="nav-icon">📐</span><span>מדריך ונוסחאות</span>
+      </button>
+    </nav>
+
+    <!-- Footer Sync bar -->
+    <div class="sync-bar" id="sync-bar">טוען…</div>
+
+  </div><!-- #app -->
+
+  <!-- Drawer/Settings Panel -->
+  <div class="overlay" id="overlay"></div>
+  <div class="detail-panel" id="settings-panel">
+    <div class="detail-header">
+      <button class="btn-close-panel" id="settings-close">×</button>
+      <div class="detail-title-wrap">
+        <div class="detail-company">הגדרות מערכת</div>
+        <div class="detail-role">עדכון מחירי שוק (₪/מ׳)</div>
       </div>
-
-      <div class="formula-section">
-        <div class="formula-section-title">הנחה משוק</div>
-        <p class="formula-desc">
-          כמה זולה דירת ההגרלה ביחס למחיר החופשי באותה עיר (דירת 4 חדרים, מדדירות, יוני 2026).
-        </p>
-        <div class="formula-box">הנחה = (מחיר_שוק − מחיר_הגרלה) / מחיר_שוק</div>
-        <p class="formula-desc" style="margin-top:10px">
-          אם דירה דומה נמכרת בשוק ב-40,000 ₪/מ׳, וההגרלה מוכרת ב-25,000 ₪/מ׳ — החיסכון הוא 15,000 ₪ על כל מטר. חלקי מחיר השוק (40,000) מקבלים 37.5% הנחה. זה האחוז שמייצג כמה "כסף שנשאר בכיס" ביחס לרכישה חופשית. ככל שהנחה גבוהה יותר — ההגרלה כלכלית יותר גם אם הסיכוי נמוך.
-        </p>
-        <p class="formula-note">
-          מחירי השוק הם ממוצע עירוני שניתן לעדכן ידנית בהגדרות (⚙️). חישוב לדירת 4 חדרים בלבד — פרויקטים קטנים יותר עשויים להיות זולים יותר בפועל.
-        </p>
-      </div>
-
-    </div><!-- tab-formulas -->
-
-  </div><!-- #main -->
-
-  <nav class="bottom-nav">
-    <button class="nav-tab active" data-tab="lotteries">
-      <span class="nav-icon">📋</span><span>הגרלות</span>
-    </button>
-    <button class="nav-tab" data-tab="cities">
-      <span class="nav-icon">🏙️</span><span>לפי עיר</span>
-    </button>
-    <button class="nav-tab" data-tab="scatter">
-      <span class="nav-icon">🎯</span><span>Sweet Spot</span>
-    </button>
-    <button class="nav-tab" data-tab="formulas">
-      <span class="nav-icon">📐</span><span>נוסחאות</span>
-    </button>
-  </nav>
-
-  <div class="sync-bar" id="sync-bar">טוען…</div>
-
-</div><!-- #app -->
-
-<!-- Settings panel -->
-<div class="overlay" id="overlay"></div>
-<div class="detail-panel" id="settings-panel">
-  <div class="detail-header">
-    <button class="btn-back" id="settings-close">←</button>
-    <div class="detail-title-wrap">
-      <div class="detail-company">הגדרות</div>
-      <div class="detail-role">מחירי שוק לעיר (₪/מ׳)</div>
+    </div>
+    <div class="detail-body">
+      <p class="settings-note">מחירי שוק המשמשים לחישוב אחוז ההנחה. המחירים מבוססים על ממוצע עירוני לדירת 4 חדרים (יוני 2026). ניתן לעדכן את המחירים בהתאם לידע מקומי — השינויים יישמרו בדפדפן.</p>
+      <div id="market-price-list" class="market-inputs-grid"></div>
+      <button class="btn-primary" id="reset-prices">איפוס לערכי מחקר</button>
     </div>
   </div>
-  <div class="detail-body">
-    <p class="settings-note">מחירי בסיס נחקרו מ<a href="https://www.madadirot.co.il" target="_blank">madadirot.co.il</a> (דירת 4 חדרים, יוני 2026). ניתן לעדכן לפי ידע עצמאי — השינוי נשמר במכשיר.</p>
-    <div id="market-price-list"></div>
-    <button class="btn-primary" id="reset-prices" style="margin-top:12px">איפוס למחירי מחקר</button>
-  </div>
-</div>
 
-<!-- Row detail panel -->
-<div class="overlay" id="row-overlay"></div>
-<div class="detail-panel" id="row-panel">
-  <div class="detail-header">
-    <button class="btn-back" id="row-close">←</button>
-    <div class="detail-title-wrap">
-      <div class="detail-company" id="row-title"></div>
-      <div class="detail-role" id="row-subtitle"></div>
+  <!-- Drawer/Row Details Panel -->
+  <div class="overlay" id="row-overlay"></div>
+  <div class="detail-panel" id="row-panel">
+    <div class="detail-header">
+      <button class="btn-close-panel" id="row-close">×</button>
+      <div class="detail-title-wrap">
+        <div class="detail-company" id="row-title">—</div>
+        <div class="detail-role" id="row-subtitle">—</div>
+      </div>
     </div>
+    <div class="detail-body" id="row-body"></div>
   </div>
-  <div class="detail-body" id="row-body"></div>
-</div>
 
-<div id="toast" class="toast"></div>
+  <!-- Floating Toast Notifications -->
+  <div id="toast" class="toast"></div>
 
-<script type="module" src="/app.js"></script>
+  <script type="module" src="/app.js"></script>
 </body>
 </html>

@@ -153,6 +153,30 @@ function renderLotteries() {
       parseInt(tr.dataset.pid), parseInt(tr.dataset.lid)
     ));
   });
+  updateSummaryStats();
+}
+
+function updateSummaryStats() {
+  const lots = filteredLotteries();
+  const count = lots.length;
+  
+  const oddsList = lots.map(l => computeOdds(l, sliderP).pini).filter(v => v !== null);
+  const bestOdds = oddsList.length ? Math.max(...oddsList) : 0;
+  
+  const discounts = lots.map(l => discountPct(l)).filter(v => v !== null);
+  const avgDiscount = discounts.length ? (discounts.reduce((a, b) => a + b, 0) / discounts.length) : 0;
+  
+  const reservistApts = lots.reduce((acc, l) => acc + (l.reserve_active_units || 0), 0);
+  
+  const elTotal = document.getElementById('stat-total-lotteries');
+  const elBest = document.getElementById('stat-best-odds');
+  const elDiscount = document.getElementById('stat-avg-discount');
+  const elApts = document.getElementById('stat-reservist-apts');
+  
+  if (elTotal) elTotal.textContent = fmt.num(count);
+  if (elBest) elBest.textContent = fmt.pct(bestOdds);
+  if (elDiscount) elDiscount.textContent = fmt.pct(avgDiscount);
+  if (elApts) elApts.textContent = fmt.num(reservistApts);
 }
 
 // ── Render: city tab ───────────────────────────────────────────────────────────
