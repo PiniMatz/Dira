@@ -16,13 +16,26 @@ SCRAPER    = SKILLS_DIR / "scrape_dira.py"
 EXPORTER   = SKILLS_DIR / "build_site_data.py"
 
 
+def load_env():
+    env_path = Path(__file__).parent.parent / "secrets.local.env"
+    if env_path.exists():
+        for line in env_path.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if line and not line.startswith("#") and "=" in line:
+                key, val = line.split("=", 1)
+                os.environ[key.strip()] = val.strip()
+
+load_env()
+
+
 class DiraHandler(http.server.SimpleHTTPRequestHandler):
     def do_POST(self):
         parsed = urlparse(self.path)
         if parsed.path == "/refresh":
             query = parse_qs(parsed.query)
             code = query.get("code", [""])[0]
-            if code == "XXXX":
+            expected_code = os.environ.get("DIRA_REFRESH_CODE")
+            if expected_code and code == expected_code:
                 self._handle_refresh()
             else:
                 self.send_response(401)

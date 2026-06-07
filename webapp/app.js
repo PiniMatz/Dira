@@ -630,20 +630,22 @@ document.addEventListener('DOMContentLoaded', () => {
     renderLotteries();
   });
 
+  // Hide refresh button on GitHub Pages since it has no python backend
+  if (window.location.hostname.endsWith('github.io')) {
+    const refreshBtn = document.getElementById('refresh-btn');
+    if (refreshBtn) {
+      refreshBtn.style.display = 'none';
+    }
+  }
+
   // Refresh button — 10-min cooldown to avoid WAF rate-limiting
   const REFRESH_COOLDOWN_MS = 10 * 60 * 1000;
   document.getElementById('refresh-btn').addEventListener('click', async () => {
-    const passcode = prompt('אנא הזן קוד רענון:');
-    if (!passcode) return;
-    if (passcode !== 'XXXX') {
-      toast('קוד שגוי. הרענון בוטל.');
-      return;
-    }
-
     if (window.location.hostname.endsWith('github.io')) {
       toast('רענון ישיר אינו זמין ב-GitHub Pages. הנתונים מתעדכנים אוטומטית (כל 12 שעות).');
       return;
     }
+
     const btn = document.getElementById('refresh-btn');
     const lastRefresh = parseInt(localStorage.getItem('dira_last_refresh') || '0');
     const sinceLastMs = Date.now() - lastRefresh;
@@ -652,13 +654,23 @@ document.addEventListener('DOMContentLoaded', () => {
       toast(`המתן עוד ${minsLeft} דק׳ לפני רענון נוסף`);
       return;
     }
+
+    const passcode = prompt('אנא הזן קוד רענון:');
+    if (!passcode) return;
+
     btn.textContent = '⏳';
     btn.disabled = true;
     localStorage.setItem('dira_last_refresh', Date.now());
     try {
-      const res = await fetch(`/refresh?code=${passcode}`, { method: 'POST' });
-      const data = await res.json();
-      if (data.ok) {
+      const res = await fetch(`/refresh?code=${encodeURIComponent(passcode)}`, { method: 'POST' });
+      
+      if (res.status === 401) {
+        toast('קוד שגוי. הרענון נכשל.');
+        return;
+      }
+
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.ok) {
         // Reload data.json and re-render
         const r = await fetch(DATA_URL + '?t=' + Date.now());
         const d = await r.json();
