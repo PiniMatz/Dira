@@ -582,6 +582,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // Refresh button — 10-min cooldown to avoid WAF rate-limiting
   const REFRESH_COOLDOWN_MS = 10 * 60 * 1000;
   document.getElementById('refresh-btn').addEventListener('click', async () => {
+    if (window.location.hostname.endsWith('github.io')) {
+      toast('רענון ישיר אינו זמין ב-GitHub Pages. הנתונים מתעדכנים אוטומטית (כל 12 שעות).');
+      return;
+    }
     const btn = document.getElementById('refresh-btn');
     const lastRefresh = parseInt(localStorage.getItem('dira_last_refresh') || '0');
     const sinceLastMs = Date.now() - lastRefresh;
