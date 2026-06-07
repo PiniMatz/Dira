@@ -7,8 +7,14 @@ READ ONLY — never writes to the DB, never touches the website.
 """
 import json
 import sqlite3
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
+
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8")
 
 DB_PATH = Path(__file__).parent.parent.parent / "data" / "dira.sqlite"
 OUT_PATH = Path(__file__).parent.parent.parent / "webapp" / "data.json"
@@ -119,7 +125,7 @@ def main():
         "cities": sorted(cities - {None}),
         "lotteries": lotteries,
     }
-    OUT_PATH.write_text(json.dumps(payload, ensure_ascii=False, indent=2))
+    OUT_PATH.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"Wrote {len(lotteries)} lotteries to {OUT_PATH}")
     print(f"Cities: {sorted(cities - {None})}")
 

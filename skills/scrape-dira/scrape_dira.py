@@ -8,10 +8,16 @@ import gzip
 import json
 import re
 import sqlite3
+import sys
 import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import quote
+
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8")
 
 DB_PATH = Path(__file__).parent.parent.parent / "data" / "dira.sqlite"
 BASE_URL = "https://www.dira.moch.gov.il"
