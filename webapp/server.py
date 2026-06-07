@@ -9,6 +9,7 @@ import os
 import subprocess
 import sys
 from pathlib import Path
+from urllib.parse import urlparse, parse_qs
 
 SKILLS_DIR = Path(__file__).parent.parent / "skills" / "scrape-dira"
 SCRAPER    = SKILLS_DIR / "scrape_dira.py"
@@ -17,8 +18,17 @@ EXPORTER   = SKILLS_DIR / "build_site_data.py"
 
 class DiraHandler(http.server.SimpleHTTPRequestHandler):
     def do_POST(self):
-        if self.path == "/refresh":
-            self._handle_refresh()
+        parsed = urlparse(self.path)
+        if parsed.path == "/refresh":
+            query = parse_qs(parsed.query)
+            code = query.get("code", [""])[0]
+            if code == "XXXX":
+                self._handle_refresh()
+            else:
+                self.send_response(401)
+                self.send_header("Content-Type", "application/json; charset=utf-8")
+                self.end_headers()
+                self.wfile.write(json.dumps({"ok": False, "error": "Unauthorized: invalid passcode"}).encode())
         else:
             self.send_error(404)
 

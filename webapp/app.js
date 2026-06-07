@@ -543,6 +543,29 @@ async function init() {
 document.addEventListener('DOMContentLoaded', () => {
   init();
 
+  // Header Logo click — Go Home / Reset Filters
+  const logoBtn = document.getElementById('header-logo-btn');
+  if (logoBtn) {
+    logoBtn.addEventListener('click', () => {
+      filterCities.clear();
+      filterReservist = false;
+      filterNoReligious = false;
+      filterMaxDays = null;
+      
+      document.querySelectorAll('.city-chip').forEach(b => b.classList.remove('active'));
+      const reservistCheck = document.getElementById('filter-reservist');
+      const noReligiousCheck = document.getElementById('filter-no-religious');
+      const daysInput = document.getElementById('filter-days');
+      if (reservistCheck) reservistCheck.checked = false;
+      if (noReligiousCheck) noReligiousCheck.checked = false;
+      if (daysInput) daysInput.value = '';
+      
+      switchTab('lotteries');
+      renderLotteries();
+      toast('מסננים אופסו');
+    });
+  }
+
   // Slider
   const slider = document.getElementById('reservist-slider');
   const sliderLabel = document.getElementById('slider-pct');
@@ -606,6 +629,13 @@ document.addEventListener('DOMContentLoaded', () => {
   // Refresh button — 10-min cooldown to avoid WAF rate-limiting
   const REFRESH_COOLDOWN_MS = 10 * 60 * 1000;
   document.getElementById('refresh-btn').addEventListener('click', async () => {
+    const passcode = prompt('אנא הזן קוד רענון:');
+    if (!passcode) return;
+    if (passcode !== 'XXXX') {
+      toast('קוד שגוי. הרענון בוטל.');
+      return;
+    }
+
     if (window.location.hostname.endsWith('github.io')) {
       toast('רענון ישיר אינו זמין ב-GitHub Pages. הנתונים מתעדכנים אוטומטית (כל 12 שעות).');
       return;
@@ -622,7 +652,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.disabled = true;
     localStorage.setItem('dira_last_refresh', Date.now());
     try {
-      const res = await fetch('/refresh', { method: 'POST' });
+      const res = await fetch(`/refresh?code=${passcode}`, { method: 'POST' });
       const data = await res.json();
       if (data.ok) {
         // Reload data.json and re-render
