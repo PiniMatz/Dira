@@ -1,0 +1,98 @@
+{
+  "_note": "Representative market price per m² (4-room apartments). Source: madadirot.co.il unless noted. as_of: 2026-06.",
+  "מעלה אדומים": {
+    "market_per_meter": 18870,
+    "source": "https://www.madadirot.co.il/areas/3616/",
+    "as_of": "2026-06"
+  },
+  "כפר סבא": {
+    "market_per_meter": 26496,
+    "source": "https://www.madadirot.co.il/areas/6900/",
+    "as_of": "2026-06"
+  },
+  "קריית גת": {
+    "market_per_meter": 16571,
+    "source": "https://www.madadirot.co.il/areas/2630/",
+    "as_of": "2026-06"
+  },
+  "קדימה-צורן": {
+    "market_per_meter": 23435,
+    "source": "https://www.madadirot.co.il/areas/195/",
+    "as_of": "2026-06"
+  },
+  "רכסים": {
+    "market_per_meter": 15106,
+    "source": "https://www.madadirot.co.il/areas/922/",
+    "as_of": "2026-06"
+  },
+  "בית דגן": {
+    "market_per_meter": 25124,
+    "source": "https://www.madadirot.co.il/areas/466/",
+    "as_of": "2026-06"
+  },
+  "מזכרת בתיה": {
+    "market_per_meter": 26616,
+    "source": "https://www.madadirot.co.il/areas/28/",
+    "as_of": "2026-06"
+  },
+  "חדרה": {
+    "market_per_meter": 18103,
+    "source": "https://www.madadirot.co.il/areas/6500/",
+    "as_of": "2026-06"
+  },
+  "בני עי\"ש": {
+    "market_per_meter": 16990,
+    "source": "https://www.madadirot.co.il/areas/1066/",
+    "as_of": "2026-06"
+  },
+  "בית שמש": {
+    "market_per_meter": 21574,
+    "source": "https://www.madadirot.co.il/areas/2610/",
+    "as_of": "2026-06"
+  },
+  "בת חפר": {
+    "market_per_meter": 20896,
+    "source": "https://www.madadirot.co.il/areas/1319/",
+    "as_of": "2026-06"
+  },
+  "ראשון לציון": {
+    "market_per_meter": 23702,
+    "source": "https://www.madadirot.co.il/areas/8300/",
+    "as_of": "2026-06"
+  },
+  "נהרייה": {
+    "market_per_meter": 13904,
+    "source": "https://www.madadirot.co.il/areas/9100/",
+    "as_of": "2026-06"
+  },
+  "כפר מנדא": {
+    "market_per_meter": 8700,
+    "source": "https://www.madlan.co.il/area-info/%D7%9B%D7%A4%D7%A8-%D7%9E%D7%A0%D7%93%D7%90-%D7%99%D7%A9%D7%A8%D7%90%D7%9C",
+    "as_of": "2026-06"
+  },
+  "רחובות": {
+    "market_per_meter": 23364,
+    "source": "https://www.madadirot.co.il/areas/8400/",
+    "as_of": "2026-06"
+  },
+  "יקנעם עילית": {
+    "market_per_meter": 18919,
+    "source": "https://www.madadirot.co.il/areas/240/",
+    "as_of": "2026-06"
+  },
+  "יהוד": {
+    "market_per_meter": 24378,
+    "source": "https://www.madadirot.co.il/areas/9400/",
+    "as_of": "2026-06"
+  },
+  "אשדוד": {
+    "market_per_meter": 18250,
+    "source": "https://www.madadirot.co.il/areas/70/",
+    "as_of": "2026-06"
+  },
+  "אילת": {
+    "market_per_meter": 16700,
+    "source": "https://www.madadirot.co.il/areas/2600/",
+    "as_of": "2026-06"
+  }
+}

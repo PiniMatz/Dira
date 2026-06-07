@@ -1,0 +1,15 @@
+# Secrets
+secrets.local.env
+
+# Screenshots and temp scraper files
+data/screenshots/
+
+# Python caches
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Windows temp files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
