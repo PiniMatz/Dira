@@ -221,10 +221,10 @@
         <div class="formulas-grid">
           
           <div class="formula-section glass-card">
-            <div class="formula-section-title">📊 סדר שלבי ההגרלה</div>
+            <div class="formula-section-title">📊 סדר שלבי ההגרלה וחוק השירות</div>
             <p class="formula-desc">
-              כל הגרלה מתנהלת ב-5 שלבים עוקבים. מי שלא זוכה בשלבו עובר אוטומטית לשלב הבא.
-              הדירות בכל שלב מוגרלות רק בין הזכאים לאותה קבוצה.
+              כל הגרלה מתנהלת ב-5 שלבים עוקבים. בעקבות חוק שירות החובה החדש, רק מי שהשלימו 24 חודשי שירות צבאי או לאומי/אזרחי זכאים להשתתף בהגרלות.
+              מי שלא זוכה בשלבו עובר אוטומטית לשלב הבא.
             </p>
             <ul class="stage-list">
               <li><span class="stage-num">1</span><span class="stage-label">נכים רתוקים <small>(ah דירות)</small></span></li>
@@ -239,35 +239,45 @@
           </div>
 
           <div class="formula-section glass-card">
-            <div class="formula-section-title">📐 סיכוי בסיס</div>
-            <p class="formula-desc">הסיכוי התאורטי לזכייה במידה וכולם היו מתחרים בצורה שווה, ללא עדיפות לקבוצות עדיפות.</p>
-            <div class="formula-box">סיכוי בסיס = A / N</div>
+            <div class="formula-section-title">📐 סיכוי בסיס (מותאם חוק שירות)</div>
+            <p class="formula-desc">הסיכוי לזכייה עבור משתתף זכאי רגיל, בהנחה שכל הנרשמים הזכאים מתחרים שווה (לאחר סינון הלא-משרתים).</p>
+            <div class="formula-box">סיכוי בסיס = A / (N × E_city)</div>
             <table class="var-table">
               <tr><td>A</td><td>מספר הדירות המוגרלות לזכאים (apartments_for_eligible)</td></tr>
-              <tr><td>N</td><td>סה״כ נרשמים (participants_count אם קיים, אחרת registrants)</td></tr>
+              <tr><td>N</td><td>סה״כ רשומים מקורי (participants_count אם קיים, אחרת registrants)</td></tr>
+              <tr><td>E_city</td><td>שיעור זכאות עירוני ממוצע (לפי דוח הכנסת, לדוגמה 9% בבני ברק, 85% בערים כלליות)</td></tr>
             </table>
           </div>
 
-          <div class="formula-section glass-card">
+          <div class="formula-section glass-card" style="grid-column: span 2;">
             <div class="formula-section-title">🛡️ סיכוי שלי — מילואים עורף (לא לוחם)</div>
             <p class="formula-desc">
-              חישוב דו-שלבי: סיכוי לזכות בשלב 3, ובמקרה של הפסד - סיכוי לזכות בהגרלה הכללית (שלב 5).
+              חישוב דו-שלבי מורכב: סיכוי לזכות בשלב 3 (מילואים עורף), ובמקרה של הפסד - סיכוי לזכות בהגרלה הכללית (שלב 5) שמשודרגת בעודפי מכסות בני מקום.
             </p>
-            <div class="formula-box">━━ שלב 3: מכסת משרתי עורף ━━
-R  = max(ar,  p × N − ac)
-P1 = ar / R            [אם ar > 0]
+            <div class="formula-box">━━ סינון נרשמים זכאים ━━
+N_eligible = N × E_city
+N_local_eligible = N_local × E_city
 
-━━ שלב 5: הגרלה כללית ━━
-openComp = max(ao,  N − (ah + ac + ar + al))
-P2 = ao / openComp     [אם ao > 0]
+━━ שלב 3: מכסת משרתי עורף ━━
+R  = max(ar,  p × N − ac)       [הערכת מתחרי מילואים בפועל]
+P1 = ar / R                    [אם ar > 0]
+
+━━ שלב 4: עודף בני מקום (זרימה כללית) ━━
+W_local = min(al, N_local_eligible)
+ao_updated = max(0, A − ah − ac − ar − W_local)  [דירות יתרה זולגות לשלב 5]
+
+━━ שלב 5: הגרלה כללית מותאמת ━━
+openComp = max(ao_updated, N_eligible − ah − ac − ar − W_local)
+P2 = ao_updated / openComp     [אם ao_updated > 0]
 
 ━━ סיכוי כולל ━━
 סיכוי שלי = P1 + (1 − P1) × P2</div>
             <table class="var-table">
               <tr><td>ar</td><td>דירות מוקצות למילואים עורף (reserve_active_units)</td></tr>
               <tr><td>ac</td><td>דירות מוקצות ללוחמי מילואים (reserve_combat_units)</td></tr>
-              <tr><td>ao</td><td>דירות בהגרלה הכללית = A − ah − ac − ar − al</td></tr>
-              <tr><td>p</td><td>הנחת אחוז מילואים (הסליידר, ברירת מחדל 15%)</td></tr>
+              <tr><td>al</td><td>דירות מוקצות לבני מקום (local_housing_units)</td></tr>
+              <tr><td>ao_updated</td><td>דירות הגרלה כללית כולל עודפים שזלגו מבני מקום</td></tr>
+              <tr><td>p</td><td>הנחת אחוז מילואים מתוך סך הנרשמים המקורי (הסליידר, ברירת מחדל 15%)</td></tr>
             </table>
           </div>
 

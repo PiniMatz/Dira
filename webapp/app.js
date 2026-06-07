@@ -17,6 +17,90 @@ let filterReservist = false;
 let filterNoReligious = false;
 let filterMaxDays = null;
 
+// City enlistment/service eligibility rates (Knesset Research Center report, Jan 2026)
+const CITY_ELIGIBILITY = {
+  // Haredi
+  'מודיעין עילית': 0.09,
+  'ביתר עילית': 0.07,
+  'בני ברק': 0.09,
+  'אלעד': 0.09,
+  'רכסים': 0.05,
+  'עמנואל': 0.02,
+  'קרית יערים': 0.05,
+  'קריית יערים': 0.05,
+  
+  // Arab / Bedouin (Very low)
+  'אום אל-פחם': 0.02,
+  'נצרת': 0.06,
+  'סחנין': 0.07,
+  'סח\'נין': 0.07,
+  'טייבה': 0.02,
+  'שפרעם': 0.14,
+  'טמרה': 0.04,
+  'עראבה': 0.02,
+  'קלאנסווה': 0.02,
+  'קלנסווה': 0.02,
+  'באקה אל-גרביה': 0.02,
+  'ריינה': 0.12,
+  'כפר כנא': 0.05,
+  'ג\'דיידה-מכר': 0.05,
+  'ערערה': 0.01,
+  'מג\'ד אל-כרום': 0.04,
+  'אבו גוש': 0.04,
+  'עין מאהל': 0.04,
+  'משהד': 0.03,
+  'כאבול': 0.07,
+  'כפר קאסם': 0.03,
+  'ג\'סר א-זרקא': 0.05,
+  'חורה': 0.09,
+  'כסיפה': 0.18,
+  'לקיה': 0.08,
+  'ערערה-בנגב': 0.19,
+  'רהט': 0.14,
+  'שגב-שלום': 0.15,
+  'תל שבע': 0.23,
+  'בועיינה-נוג\'ידאת': 0.09,
+  'כפר מנדא': 0.18,
+  'אבו סנאן': 0.18,
+  'עילוט': 0.12,
+  'אעבלין': 0.06,
+  'נחף': 0.12,
+  'דייר אל-אסד': 0.11,
+  'בענה': 0.10,
+  'יפיע': 0.05,
+  'דבורייה': 0.05,
+  'ג\'לג\'וליה': 0.02,
+  'בסמ\"ה': 0.01,
+  'בסמת טבעון': 0.29,
+  'טובא-זנגרייה': 0.37,
+  'כעביה-טבאש-חג\'אג\'רה': 0.43,
+  'ביר אל-מכסור': 0.41,
+  'שבלי - אום אל-גנם': 0.41,
+  'זרזיר': 0.44,
+  
+  // Mixed / Druze (Medium-High)
+  'בית ג\'ן': 0.68,
+  'יאנוח-ג\'ת': 0.67,
+  'כסרא-סמיע': 0.34,
+  'ירכא': 0.30,
+  'מגאר': 0.73,
+  'חורפיש': 0.75,
+  'סאג\'ור': 0.29,
+  'ע\'ג\'ר': 0.27,
+  
+  // Cities with significant Haredi populations but mixed
+  'בית שמש': 0.45,
+  'ירושלים': 0.50,
+  'צפת': 0.55,
+  'נתיבות': 0.65,
+  'אופקים': 0.75,
+  'חצור הגלילית': 0.75,
+};
+
+function getEligibilityRate(city) {
+  return CITY_ELIGIBILITY[city] ?? 0.85;
+}
+
 // ── Odds engine ────────────────────────────────────────────────────────────────
 function computeOdds(lot, p) {
   const A  = lot.apartments_for_eligible || 0;
@@ -24,26 +108,50 @@ function computeOdds(lot, p) {
   const ac = lot.reserve_combat_units || 0;
   const ar = lot.reserve_active_units || 0;
   const al = lot.local_housing_units || 0;
-  const ao = lot.a_open || 0;  // pre-computed in build_site_data.py
   const N  = lot.participants_count ?? lot.registrants ?? 0;
+  const N_local = lot.registrants_local || 0;
 
-  if (N <= 0 || A <= 0) return { pini: null, baseline: null };
+  if (N <= 0 || A <= 0) return { pini: null, baseline: null, eRate: 0.85, N_eligible: 0, N_local_eligible: 0, ao_updated: 0, W_local: 0 };
 
-  const baseline = A / N;
+  // Enlistment eligibility rate for the city
+  const eRate = getEligibilityRate(lot.city);
 
-  // Stage 3: non-combat active-reservist pool (Pini's primary stage)
+  // Apply service-requirement deflators
+  const N_eligible = N * eRate;
+  const N_local_eligible = N_local * eRate;
+
+  // New Baseline: probability under the new eligibility constraint
+  const baseline = Math.min(1, A / N_eligible);
+
+  // Stage 1: non-combat active-reservist quota odds
+  // Active reservists are already 100% eligible, so their absolute count is based on the original pool N
   // Combat winners (ac) already exited in Stage 2 — subtract them from the reservist pool
   const R = Math.max(ar, p * N - ac);
   const P1 = ar > 0 ? Math.min(1, ar / R) : 0;
 
-  // Stage 2: open pool (if lost stage 1)
-  // Local registrants who didn't win the local quota re-enter the open pool.
-  // Only the al quota winners exit; subtract them (along with other quota winners) from N.
-  const openCompetitors = Math.max(ao, N - (ah + ac + ar + al));
-  const P2 = ao > 0 ? Math.min(1, ao / openCompetitors) : 0;
+  // Stage 2: local resident quota
+  // Calculate how many apartments are actually allocated to local residents
+  const W_local = Math.min(al, N_local_eligible);
+
+  // Stage 3: open pool
+  // Unused local apartments overflow to the open pool: A - ah - ac - ar - W_local
+  const ao_updated = Math.max(0, A - (ah + ac + ar + W_local));
+
+  // Competitors in the open pool (all remaining eligible registrants who haven't won a quota yet)
+  const openCompetitors = Math.max(ao_updated, N_eligible - (ah + ac + ar + W_local));
+  const P2 = ao_updated > 0 ? Math.min(1, ao_updated / openCompetitors) : 0;
 
   const pini = P1 + (1 - P1) * P2;
-  return { pini: Math.min(1, pini), baseline: Math.min(1, baseline) };
+  
+  return { 
+    pini: Math.min(1, pini), 
+    baseline: Math.min(1, baseline),
+    eRate,
+    N_eligible: Math.round(N_eligible),
+    N_local_eligible: Math.round(N_local_eligible),
+    ao_updated: Math.round(ao_updated),
+    W_local: Math.round(W_local)
+  };
 }
 
 function cityAggregate(lots, p) {
@@ -349,7 +457,7 @@ function positionTooltip(e, tip, wrap) {
 function openRowPanel(pid, lid) {
   const l = allLotteries.find(x => x.project_id === pid && x.lottery_id === lid);
   if (!l) return;
-  const { pini, baseline } = computeOdds(l, sliderP);
+  const { pini, baseline, eRate, N_eligible, N_local_eligible, ao_updated, W_local } = computeOdds(l, sliderP);
   const disc  = discountPct(l);
   const days  = daysToClose(l);
   const N     = l.participants_count ?? l.registrants;
@@ -365,19 +473,21 @@ function openRowPanel(pid, lid) {
     <div class="big-odds-label">סיכוי שלך (עם עדיפות מילואים)</div>
 
     <div class="row-section">
-      <div class="row-section-label">סיכויים</div>
-      ${field('סיכוי בסיס', fmt.pct(baseline))}
+      <div class="row-section-label">סיכויים וחוק השירות</div>
+      ${field('שיעור זכאות עירוני', fmt.pct(eRate))}
+      ${field('סיכוי בסיס (משודרג)', fmt.pct(baseline))}
       ${field('סיכוי מצטבר בעיר', fmt.pct(cityAggregate(allLotteries.filter(x => x.city === l.city), sliderP)))}
     </div>
 
     <div class="row-section">
       <div class="row-section-label">דירות</div>
-      ${field('זכאים', l.apartments_for_eligible)}
+      ${field('דירות לזכאים', l.apartments_for_eligible)}
       ${field('מילואים פעילים', l.reserve_active_units)}
       ${field('מילואים לוחמים', l.reserve_combat_units)}
-      ${field('מקומיים', l.local_housing_units)}
+      ${field('בני מקום (הקצאה)', l.local_housing_units)}
+      ${field('בני מקום שחולקו (מוערך)', W_local)}
       ${field('נכים', l.handicapped_units)}
-      ${field('בריכה פתוחה', l.a_open)}
+      ${field('הגרלה כללית (משודרג)', ao_updated)}
     </div>
 
     <div class="row-section">
@@ -389,9 +499,10 @@ function openRowPanel(pid, lid) {
 
     <div class="row-section">
       <div class="row-section-label">רישום</div>
-      ${field('רשומים סה״כ', fmt.num(l.registrants))}
-      ${field('משתתפים מאומתים', fmt.num(l.participants_count))}
+      ${field('רשומים סה״כ', fmt.num(N))}
+      ${field('רשומים זכאים (משוער)', fmt.num(N_eligible))}
       ${field('מקומיים רשומים', fmt.num(l.registrants_local))}
+      ${field('מקומיים זכאים (משוער)', fmt.num(N_local_eligible))}
       ${field('ימים לסגירה', days ?? '—')}
       ${field('תאריך סיום', l.signup_end_date ? l.signup_end_date.slice(0,10) : '—')}
     </div>
