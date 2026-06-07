@@ -362,16 +362,14 @@ button {
 /* ── Main content pane ───────────────────────────────────────────────────────── */
 #main {
   flex: 1;
-  overflow: hidden;
+  overflow-y: auto;
   position: relative;
+  padding-bottom: calc(var(--nav-h) + var(--sync-h) + 20px);
 }
 
 .tab-pane {
   display: none;
-  position: absolute;
-  inset: 0;
-  overflow-y: auto;
-  padding: 10px 24px var(--nav-h) 24px;
+  padding: 10px 24px 0 24px;
 }
 .tab-pane.active {
   display: block;

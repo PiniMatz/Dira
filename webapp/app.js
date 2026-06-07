@@ -474,6 +474,10 @@ function switchTab(name) {
   document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-' + name)?.classList.add('active');
   document.querySelector(`.nav-tab[data-tab="${name}"]`)?.classList.add('active');
+  
+  const mainEl = document.getElementById('main');
+  if (mainEl) mainEl.scrollTop = 0;
+
   if (name === 'cities')  renderCities();
   if (name === 'scatter') renderScatter();
 }

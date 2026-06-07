@@ -40,61 +40,61 @@
       </div>
     </header>
 
-    <!-- Interactive Top Info Grid -->
-    <div class="dashboard-top-section">
-      <!-- Reservist Slider Widget -->
-      <div class="slider-widget glass-card">
-        <div class="slider-header">
-          <div class="slider-title-wrap">
-            <span class="slider-icon">🎗️</span>
-            <span class="slider-title">אחוז משרתי המילואים שנרשמו</span>
-          </div>
-          <span class="slider-badge" id="slider-pct">15%</span>
-        </div>
-        <div class="slider-control-wrap">
-          <input type="range" id="reservist-slider" min="5" max="40" value="15" step="1">
-          <div class="slider-labels">
-            <span>← אופטימי (פחות מתחרים)</span>
-            <span>שמרני (יותר מתחרים) →</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Dynamic Summary Cards -->
-      <div class="summary-cards">
-        <div class="stat-card glass-card">
-          <div class="stat-icon-wrap bg-blue-glow">📋</div>
-          <div class="stat-content">
-            <span class="stat-label">הגרלות פתוחות</span>
-            <span class="stat-val" id="stat-total-lotteries">—</span>
-          </div>
-        </div>
-        <div class="stat-card glass-card">
-          <div class="stat-icon-wrap bg-green-glow">🎯</div>
-          <div class="stat-content">
-            <span class="stat-label">סיכוי מצטבר מירבי</span>
-            <span class="stat-val text-green" id="stat-best-odds">—</span>
-          </div>
-        </div>
-        <div class="stat-card glass-card">
-          <div class="stat-icon-wrap bg-yellow-glow">₪</div>
-          <div class="stat-content">
-            <span class="stat-label">גובה הנחה ממוצע</span>
-            <span class="stat-val text-yellow" id="stat-avg-discount">—</span>
-          </div>
-        </div>
-        <div class="stat-card glass-card">
-          <div class="stat-icon-wrap bg-purple-glow">👥</div>
-          <div class="stat-content">
-            <span class="stat-label">דירות למילואים פעילים</span>
-            <span class="stat-val text-purple" id="stat-reservist-apts">—</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- Main Content Area -->
     <div id="main">
+
+      <!-- Interactive Top Info Grid -->
+      <div class="dashboard-top-section">
+        <!-- Reservist Slider Widget -->
+        <div class="slider-widget glass-card">
+          <div class="slider-header">
+            <div class="slider-title-wrap">
+              <span class="slider-icon">🎗️</span>
+              <span class="slider-title">אחוז משרתי המילואים שנרשמו</span>
+            </div>
+            <span class="slider-badge" id="slider-pct">15%</span>
+          </div>
+          <div class="slider-control-wrap">
+            <input type="range" id="reservist-slider" min="5" max="40" value="15" step="1">
+            <div class="slider-labels">
+              <span>← אופטימי (פחות מתחרים)</span>
+              <span>שמרני (יותר מתחרים) →</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dynamic Summary Cards -->
+        <div class="summary-cards">
+          <div class="stat-card glass-card">
+            <div class="stat-icon-wrap bg-blue-glow">📋</div>
+            <div class="stat-content">
+              <span class="stat-label">הגרלות פתוחות</span>
+              <span class="stat-val" id="stat-total-lotteries">—</span>
+            </div>
+          </div>
+          <div class="stat-card glass-card">
+            <div class="stat-icon-wrap bg-green-glow">🎯</div>
+            <div class="stat-content">
+              <span class="stat-label">סיכוי מצטבר מירבי</span>
+              <span class="stat-val text-green" id="stat-best-odds">—</span>
+            </div>
+          </div>
+          <div class="stat-card glass-card">
+            <div class="stat-icon-wrap bg-yellow-glow">₪</div>
+            <div class="stat-content">
+              <span class="stat-label">גובה הנחה ממוצע</span>
+              <span class="stat-val text-yellow" id="stat-avg-discount">—</span>
+            </div>
+          </div>
+          <div class="stat-card glass-card">
+            <div class="stat-icon-wrap bg-purple-glow">👥</div>
+            <div class="stat-content">
+              <span class="stat-label">דירות למילואים פעילים</span>
+              <span class="stat-val text-purple" id="stat-reservist-apts">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <!-- Tab: Lotteries -->
       <div id="tab-lotteries" class="tab-pane active">
