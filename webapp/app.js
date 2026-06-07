@@ -1,8 +1,8 @@
 // Dira b'Hanacha analysis dashboard
 // All odds math is client-side; no backend.
 
-const DATA_URL   = '/data.json';
-const PRICES_URL = '/market_prices.json';
+const DATA_URL   = 'data.json';
+const PRICES_URL = 'market_prices.json';
 const LS_KEY     = 'dira_market_overrides';
 
 // ── State ──────────────────────────────────────────────────────────────────────
