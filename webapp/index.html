@@ -223,12 +223,13 @@
           <div class="formula-section glass-card">
             <div class="formula-section-title">📊 סדר שלבי ההגרלה וחוק השירות</div>
             <p class="formula-desc">
-              כל הגרלה מתנהלת ב-5 שלבים עוקבים. בעקבות חוק שירות החובה החדש, רק מי שהשלימו 24 חודשי שירות צבאי או לאומי/אזרחי זכאים להשתתף בהגרלות.
-              מי שלא זוכה בשלבו עובר אוטומטית לשלב הבא.
+              כל הגרלה מתנהלת ב-5 שלבים עוקבים. בהתאם לחוק שירות החובה ותוכנית <strong>"ממילואים למפתח" (עודכן 2026)</strong>:
+              רק מי שהשלימו 24 חודשי שירות צבאי/לאומי זכאים להירשם. מתוכם, לפחות <strong>50% מכלל הדירות בכל הגרלה</strong> מוקצות למילואים פעילים (מתוכן כ-25% ללוחמים).
+              משרת מילואים פעיל זכאי מוגדר כמי שצבר 45+ ימי מילואים בצו 8 מיום 7.10.23 (או תבחינים נוספים של צה"ל).
             </p>
             <ul class="stage-list">
               <li><span class="stage-num">1</span><span class="stage-label">נכים רתוקים <small>(ah דירות)</small></span></li>
-              <li><span class="stage-num">2</span><span class="stage-label">לוחמי מילואים — 60+ ימי שירות מ-7.10.23 <small>(ac דירות)</small></span></li>
+              <li><span class="stage-num">2</span><span class="stage-label">לוחמי מילואים — 45+ ימי שירות מ-7.10.23 <small>(ac דירות)</small></span></li>
               <li><span class="stage-num mine">3</span><span class="stage-label"><strong>משרתי עורף — מילואים לא-לוחמים</strong> <small>(ar דירות) ← השלב שלך</small></span></li>
               <li><span class="stage-num">4</span><span class="stage-label">בני מקום — תושבי היישוב <small>(al דירות)</small></span></li>
               <li><span class="stage-num">5</span><span class="stage-label">הגרלה כללית — כל שאר הזכאים <small>(ao דירות)</small></span></li>
@@ -253,14 +254,19 @@
             <div class="formula-section-title">🛡️ סיכוי שלי — מילואים עורף (לא לוחם)</div>
             <p class="formula-desc">
               חישוב דו-שלבי מורכב: סיכוי לזכות בשלב 3 (מילואים עורף), ובמקרה של הפסד - סיכוי לזכות בהגרלה הכללית (שלב 5) שמשודרגת בעודפי מכסות בני מקום.
+              כעת, אחוז המילואים המקומי מותאם אישית לפי צפיפות המילואימניקים בעיר על פי נתוני צה"ל 2025.
             </p>
             <div class="formula-box">━━ סינון נרשמים זכאים ━━
 N_eligible = N × E_city
 N_local_eligible = N_local × E_city
 
+━━ התאמת אחוז מילואים עירוני (p_city) ━━
+p_city = p × (Density_city / 3.5)       [בערים עם נתונים מדווחים]
+p_city = p × (E_city / 0.85)             [בכל שאר הערים - לפי שיעור הגיוס הכללי]
+
 ━━ שלב 3: מכסת משרתי עורף ━━
-R  = max(ar,  p × N − ac)       [הערכת מתחרי מילואים בפועל]
-P1 = ar / R                    [אם ar > 0]
+R  = max(ar,  p_city × N_eligible − ac)  [הערכת מתחרי מילואים זכאים בפועל]
+P1 = ar / R                              [אם ar > 0]
 
 ━━ שלב 4: עודף בני מקום (זרימה כללית) ━━
 W_local = min(al, N_local_eligible)
@@ -268,7 +274,7 @@ ao_updated = max(0, A − ah − ac − ar − W_local)  [דירות יתרה ז
 
 ━━ שלב 5: הגרלה כללית מותאמת ━━
 openComp = max(ao_updated, N_eligible − ah − ac − ar − W_local)
-P2 = ao_updated / openComp     [אם ao_updated > 0]
+P2 = ao_updated / openComp               [אם ao_updated > 0]
 
 ━━ סיכוי כולל ━━
 סיכוי שלי = P1 + (1 − P1) × P2</div>
@@ -277,8 +283,27 @@ P2 = ao_updated / openComp     [אם ao_updated > 0]
               <tr><td>ac</td><td>דירות מוקצות ללוחמי מילואים (reserve_combat_units)</td></tr>
               <tr><td>al</td><td>דירות מוקצות לבני מקום (local_housing_units)</td></tr>
               <tr><td>ao_updated</td><td>דירות הגרלה כללית כולל עודפים שזלגו מבני מקום</td></tr>
-              <tr><td>p</td><td>הנחת אחוז מילואים מתוך סך הנרשמים המקורי (הסליידר, ברירת מחדל 15%)</td></tr>
+              <tr><td>p_city</td><td>אחוז מילואים מותאם עירוני (נגזר מסליידר המשתמש p, ברירת מחדל 15%)</td></tr>
             </table>
+          </div>
+
+          <div class="formula-section glass-card" style="grid-column: span 2;">
+            <div class="formula-section-title">📊 נתוני מילואים ארציים (פרסום צה"ל לשנת 2025)</div>
+            <p class="formula-desc">נתונים רשמיים שפרסם צה"ל לרגל יום ההוקרה למערך המילואים (יוני 2026):</p>
+            <ul class="stage-list" style="margin-bottom: 12px;">
+              <li><strong>ממוצע ימי מילואים פעילים:</strong> כ-78 ימים בשנת 2025 (לעומת כ-94 ימים בשנת 2024).</li>
+              <li><strong>אחוז הורים במערך:</strong> כ-37% מכלל משרתי ומשרתות המילואים הם הורים לילדים.</li>
+              <li><strong>צפיפות מילואימניקים בערים גדולות (% מתוך כלל האוכלוסייה):</strong>
+                תל אביב-יפו: 8.7% (כ-42,000 משרתים) · 
+                באר שבע: 6.8% (כ-15,000 משרתים) · 
+                ראשון לציון: 6.2% (כ-16,000 משרתים) · 
+                חיפה: 4.7% (כ-14,000 משרתים) · 
+                ירושלים: 2.2% (כ-23,000 משרתים).
+              </li>
+            </ul>
+            <p class="formula-note">
+              הנתונים העירוניים מראים שצפיפות משרתי המילואים בתל אביב היא פי 2.5 מהממוצע הארצי (3.5%), בעוד שבירושלים היא נמוכה משמעותית עקב הרכב האוכלוסייה. הנוסחאות שלנו משתמשות במקדמים אלו כדי להתאים במדויק את סיכויי הזכייה שלך.
+            </p>
           </div>
 
           <div class="formula-section glass-card">

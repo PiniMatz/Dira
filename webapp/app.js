@@ -101,6 +101,27 @@ function getEligibilityRate(city) {
   return CITY_ELIGIBILITY[city] ?? 0.85;
 }
 
+// City reservist overall population density (IDF spokesperson report, June 2026)
+const CITY_RESERVIST_DENSITY = {
+  'תל אביב - יפו': 8.7,
+  'תל אביב-יפו': 8.7,
+  'ירושלים': 2.2,
+  'ראשון לציון': 6.2,
+  'באר שבע': 6.8,
+  'חיפה': 4.7
+};
+const NATIONAL_AVG_DENSITY = 3.5;
+
+function getCityReservistRatio(city, baseP) {
+  const density = CITY_RESERVIST_DENSITY[city];
+  if (density === undefined) {
+    // Fallback: Scale using enlistment eligibility rate compared to secular baseline of 0.85
+    const eRate = getEligibilityRate(city);
+    return baseP * (eRate / 0.85);
+  }
+  return baseP * (density / NATIONAL_AVG_DENSITY);
+}
+
 // ── Odds engine ────────────────────────────────────────────────────────────────
 function computeOdds(lot, p) {
   const A  = lot.apartments_for_eligible || 0;
@@ -111,7 +132,7 @@ function computeOdds(lot, p) {
   const N  = lot.participants_count ?? lot.registrants ?? 0;
   const N_local = lot.registrants_local || 0;
 
-  if (N <= 0 || A <= 0) return { pini: null, baseline: null, eRate: 0.85, N_eligible: 0, N_local_eligible: 0, ao_updated: 0, W_local: 0 };
+  if (N <= 0 || A <= 0) return { pini: null, baseline: null, eRate: 0.85, p_city: p, N_eligible: 0, N_local_eligible: 0, ao_updated: 0, W_local: 0, R_reservist: 0 };
 
   // Enlistment eligibility rate for the city
   const eRate = getEligibilityRate(lot.city);
@@ -123,10 +144,13 @@ function computeOdds(lot, p) {
   // New Baseline: probability under the new eligibility constraint
   const baseline = Math.min(1, A / N_eligible);
 
+  // City-specific reservist ratio scaled by IDF density statistics
+  const p_city = getCityReservistRatio(lot.city, p);
+
   // Stage 1: non-combat active-reservist quota odds
-  // Active reservists are already 100% eligible, so their absolute count is based on the original pool N
+  // Deflate active reservist competitors using N_eligible since only serving people are eligible
   // Combat winners (ac) already exited in Stage 2 — subtract them from the reservist pool
-  const R = Math.max(ar, p * N - ac);
+  const R = Math.max(ar, p_city * N_eligible - ac);
   const P1 = ar > 0 ? Math.min(1, ar / R) : 0;
 
   // Stage 2: local resident quota
@@ -147,10 +171,12 @@ function computeOdds(lot, p) {
     pini: Math.min(1, pini), 
     baseline: Math.min(1, baseline),
     eRate,
+    p_city,
     N_eligible: Math.round(N_eligible),
     N_local_eligible: Math.round(N_local_eligible),
     ao_updated: Math.round(ao_updated),
-    W_local: Math.round(W_local)
+    W_local: Math.round(W_local),
+    R_reservist: Math.round(R)
   };
 }
 
@@ -457,7 +483,7 @@ function positionTooltip(e, tip, wrap) {
 function openRowPanel(pid, lid) {
   const l = allLotteries.find(x => x.project_id === pid && x.lottery_id === lid);
   if (!l) return;
-  const { pini, baseline, eRate, N_eligible, N_local_eligible, ao_updated, W_local } = computeOdds(l, sliderP);
+  const { pini, baseline, eRate, p_city, N_eligible, N_local_eligible, ao_updated, W_local, R_reservist } = computeOdds(l, sliderP);
   const disc  = discountPct(l);
   const days  = daysToClose(l);
   const N     = l.participants_count ?? l.registrants;
@@ -475,6 +501,7 @@ function openRowPanel(pid, lid) {
     <div class="row-section">
       <div class="row-section-label">סיכויים וחוק השירות</div>
       ${field('שיעור זכאות עירוני', fmt.pct(eRate))}
+      ${field('אחוז מילואים עירוני משוער', fmt.pct(p_city))}
       ${field('סיכוי בסיס (משודרג)', fmt.pct(baseline))}
       ${field('סיכוי מצטבר בעיר', fmt.pct(cityAggregate(allLotteries.filter(x => x.city === l.city), sliderP)))}
     </div>
@@ -501,6 +528,7 @@ function openRowPanel(pid, lid) {
       <div class="row-section-label">רישום</div>
       ${field('רשומים סה״כ', fmt.num(N))}
       ${field('רשומים זכאים (משוער)', fmt.num(N_eligible))}
+      ${field('מתחרי מילואים (מוערך)', fmt.num(R_reservist))}
       ${field('מקומיים רשומים', fmt.num(l.registrants_local))}
       ${field('מקומיים זכאים (משוער)', fmt.num(N_local_eligible))}
       ${field('ימים לסגירה', days ?? '—')}
