@@ -828,6 +828,58 @@ function updateFormulasTab() {
   titleEl.textContent = title;
   descEl.textContent = desc;
   boxEl.textContent = box;
+
+  // Update stage list HTML
+  const stageListEl = document.getElementById('formula-stage-list');
+  if (stageListEl) {
+    let stageHtml = '';
+    
+    // Stage 1
+    stageHtml += `<li><span class="stage-num">1</span><span class="stage-label">נכים רתוקים <small>(ah דירות)</small></span></li>`;
+    
+    // Stage 2
+    if (userIsReservist && userIsCombat) {
+      stageHtml += `<li><span class="stage-num mine">2</span><span class="stage-label"><strong>לוחמי מילואים — 45+ ימי שירות מ-7.10.23 <small>(ac דירות)</small></strong> ← השלב שלך</span></li>`;
+    } else {
+      stageHtml += `<li><span class="stage-num">2</span><span class="stage-label">לוחמי מילואים — 45+ ימי שירות מ-7.10.23 <small>(ac דירות)</small></span></li>`;
+    }
+    
+    // Stage 3
+    if (userIsReservist) {
+      stageHtml += `<li><span class="stage-num mine">3</span><span class="stage-label"><strong>משרתי עורף — מילואים לא-לוחמים <small>(ar דירות)</small></strong> ← השלב שלך</span></li>`;
+    } else {
+      stageHtml += `<li><span class="stage-num">3</span><span class="stage-label">משרתי עורף — מילואים לא-לוחמים <small>(ar דירות)</small></span></li>`;
+    }
+    
+    // Stage 4
+    if (userLocalCity) {
+      stageHtml += `<li><span class="stage-num mine">4</span><span class="stage-label"><strong>בני מקום — תושבי היישוב <small>(al דירות)</small></strong> [מקומי ב-${userLocalCity}] ← השלב שלך</span></li>`;
+    } else {
+      stageHtml += `<li><span class="stage-num">4</span><span class="stage-label">בני מקום — תושבי היישוב <small>(al דירות)</small></span></li>`;
+    }
+    
+    // Stage 5
+    stageHtml += `<li><span class="stage-num mine">5</span><span class="stage-label"><strong>הגרלה כללית — כל שאר הזכאים <small>(ao דירות)</small></strong> ← השלב שלך</span></li>`;
+    
+    stageListEl.innerHTML = stageHtml;
+  }
+
+  // Update stage route note text
+  const stageNoteEl = document.getElementById('formula-stage-note');
+  if (stageNoteEl) {
+    let pathList = [];
+    if (userIsReservist) {
+      if (userIsCombat) {
+        pathList.push('שלב 2 (לוחמים)');
+      }
+      pathList.push('שלב 3 (עורף/פעילים)');
+    }
+    if (userLocalCity) {
+      pathList.push('שלב 4 (בני מקום)');
+    }
+    pathList.push('שלב 5 (כללית)');
+    stageNoteEl.innerHTML = `המסלול האישי שלך: ${pathList.map(s => `<strong>${s}</strong>`).join(' ← אם לא זכית ← ')}. אין עדיפות בתוך שלב 5 — כולם מתחרים שווה.`;
+  }
 }
 
 function initUserProfileDOM(cities) {
