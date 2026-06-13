@@ -21,6 +21,9 @@ jobs:
         with:
           fetch-depth: 0 # Fetch all history
 
+      - name: Pull Latest Changes
+        run: git pull origin main
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
