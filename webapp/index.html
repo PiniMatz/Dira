@@ -29,9 +29,9 @@
         <span class="header-title">דירה בהנחה <span class="header-badge">אנליטיקס</span></span>
       </div>
       <div class="header-actions">
-        <button class="btn-header" id="refresh-btn" title="רענן נתונים מהאתר">
-          <span class="btn-text">רענן נתונים</span>
-          <span class="btn-icon">🔄</span>
+        <button class="btn-header" id="theme-toggle-btn" title="שינוי ערכת נושא (בהיר/כהה)">
+          <span class="btn-text" id="theme-btn-text">מצב בהיר</span>
+          <span class="btn-icon" id="theme-btn-icon">☀️</span>
         </button>
         <button class="btn-header" id="settings-btn" title="הגדרות מחירי שוק">
           <span class="btn-text">מחירי שוק</span>
@@ -224,20 +224,6 @@
         <div id="city-cards" class="city-cards-grid"></div>
       </div>
 
-      <!-- Tab: Sweet Spot -->
-      <div id="tab-scatter" class="tab-pane">
-        <div class="chart-card glass-card">
-          <div class="chart-header">
-            <span class="chart-title">🎯 מפת ה-Sweet Spot</span>
-            <span class="chart-subtitle">איתור הפרויקטים הכלכליים ביותר בעלי הסיכוי הגבוה ביותר</span>
-          </div>
-          <p class="scatter-hint">ציר X = סיכוי שלי (%) &nbsp;·&nbsp; ציר Y = הנחה% &nbsp;·&nbsp; גודל בועה = דירות זכאים &nbsp;·&nbsp; מעבר עכבר לפרטים</p>
-          <div id="scatter-wrap">
-            <svg id="scatter-svg" xmlns="http://www.w3.org/2000/svg"></svg>
-            <div id="scatter-tooltip" class="scatter-tooltip"></div>
-          </div>
-        </div>
-      </div>
 
       <!-- Tab: Formulas -->
       <div id="tab-formulas" class="tab-pane">
@@ -354,9 +340,7 @@ P2 = ao_updated / openComp               [אם ao_updated > 0]
       <button class="nav-tab" data-tab="cities">
         <span class="nav-icon">🏙️</span><span>ניתוח לפי עיר</span>
       </button>
-      <button class="nav-tab" data-tab="scatter">
-        <span class="nav-icon">🎯</span><span>Sweet Spot</span>
-      </button>
+
       <button class="nav-tab" data-tab="formulas">
         <span class="nav-icon">📐</span><span>מדריך ונוסחאות</span>
       </button>

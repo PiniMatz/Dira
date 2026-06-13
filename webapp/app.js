@@ -22,6 +22,24 @@ let userIsReservist = true;
 let userIsCombat    = false;
 let userLocalCity   = '';
 
+// Theme settings (persistent)
+let currentTheme = localStorage.getItem('dira_theme') || 'dark';
+function applyTheme() {
+  const isLight = currentTheme === 'light';
+  if (isLight) {
+    document.body.classList.add('light-theme');
+  } else {
+    document.body.classList.remove('light-theme');
+  }
+  const textEl = document.getElementById('theme-btn-text');
+  const iconEl = document.getElementById('theme-btn-icon');
+  if (textEl && iconEl) {
+    textEl.textContent = isLight ? 'מצב כהה' : 'מצב בהיר';
+    iconEl.textContent = isLight ? '🌙' : '☀️';
+  }
+}
+applyTheme();
+
 // City enlistment/service eligibility rates (Knesset Research Center report, Jan 2026)
 const CITY_ELIGIBILITY = {
   // Haredi
@@ -451,104 +469,6 @@ function renderCities() {
   });
 }
 
-// ── Render: scatter ────────────────────────────────────────────────────────────
-const CITY_COLORS = [
-  '#3b82f6','#22c55e','#eab308','#ef4444','#8b5cf6',
-  '#06b6d4','#f97316','#ec4899','#14b8a6','#a855f7',
-  '#84cc16','#f43f5e','#0ea5e9','#fb923c','#4ade80',
-  '#e879f9','#fbbf24','#34d399','#60a5fa',
-];
-const colorFor = (() => {
-  const map = {};
-  return city => {
-    if (!map[city]) {
-      const idx = Object.keys(map).length % CITY_COLORS.length;
-      map[city] = CITY_COLORS[idx];
-    }
-    return map[city];
-  };
-})();
-
-function renderScatter() {
-  const svg = document.getElementById('scatter-svg');
-  const wrap = document.getElementById('scatter-wrap');
-  const tooltip = document.getElementById('scatter-tooltip');
-  const W = wrap.clientWidth || 340;
-  const H = Math.min(W * 0.75, 320);
-  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
-  svg.setAttribute('height', H);
-
-  const PAD = { top: 16, right: 16, bottom: 36, left: 44 };
-  const plotW = W - PAD.left - PAD.right;
-  const plotH = H - PAD.top  - PAD.bottom;
-
-  const lots = allLotteries.map(l => ({
-    l,
-    x: computeOdds(l, sliderP).pini,
-    y: discountPct(l),
-    r: Math.sqrt(l.apartments_for_eligible || 1),
-  })).filter(d => d.x != null && d.y != null);
-
-  if (!lots.length) { svg.innerHTML = '<text x="50%" y="50%" fill="#64748b" text-anchor="middle">אין נתונים</text>'; return; }
-
-  const maxX = Math.max(...lots.map(d => d.x), 0.06);
-  const maxY = Math.max(...lots.map(d => d.y), 0.5);
-  const minY = Math.min(...lots.map(d => d.y), 0);
-  const maxR = Math.max(...lots.map(d => d.r));
-  const scaleX = v => PAD.left + (v / maxX) * plotW;
-  const scaleY = v => PAD.top  + plotH - ((v - minY) / (maxY - minY)) * plotH;
-  const scaleR = v => 4 + (v / maxR) * 14;
-
-  // Grid lines
-  let grid = '';
-  for (let i = 0; i <= 4; i++) {
-    const yv = minY + (i / 4) * (maxY - minY);
-    const yp = scaleY(yv);
-    grid += `<line x1="${PAD.left}" x2="${W - PAD.right}" y1="${yp}" y2="${yp}" stroke="#334155" stroke-width="1"/>`;
-    grid += `<text x="${PAD.left - 4}" y="${yp + 4}" fill="#64748b" font-size="9" text-anchor="end">${(yv * 100).toFixed(0)}%</text>`;
-  }
-  for (let i = 0; i <= 4; i++) {
-    const xv = (i / 4) * maxX;
-    const xp = scaleX(xv);
-    grid += `<line x1="${xp}" x2="${xp}" y1="${PAD.top}" y2="${H - PAD.bottom}" stroke="#334155" stroke-width="1"/>`;
-    grid += `<text x="${xp}" y="${H - PAD.bottom + 12}" fill="#64748b" font-size="9" text-anchor="middle">${(xv * 100).toFixed(1)}%</text>`;
-  }
-
-  // Axis labels
-  grid += `<text x="${PAD.left + plotW / 2}" y="${H - 2}" fill="#64748b" font-size="9" text-anchor="middle">סיכוי שלי →</text>`;
-  grid += `<text x="10" y="${PAD.top + plotH / 2}" fill="#64748b" font-size="9" text-anchor="middle" transform="rotate(-90,10,${PAD.top + plotH / 2})">הנחה →</text>`;
-
-  // Bubbles
-  const bubbles = lots.map((d, i) => {
-    const cx = scaleX(d.x), cy = scaleY(d.y), r = scaleR(d.r);
-    const col = colorFor(d.l.city);
-    return `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${col}" fill-opacity="0.75" stroke="${col}" stroke-width="1" data-idx="${i}" class="bubble"/>`;
-  }).join('');
-
-  svg.innerHTML = grid + bubbles;
-
-  // Tooltip on hover
-  svg.querySelectorAll('.bubble').forEach(el => {
-    el.addEventListener('mouseenter', e => {
-      const d = lots[+el.dataset.idx];
-      tooltip.innerHTML = `<strong>${d.l.city}</strong><br>${d.l.neighborhood || ''}<br>סיכוי: ${fmt.pct(d.x)}<br>הנחה: ${fmt.pct(d.y)}<br>דירות: ${d.l.apartments_for_eligible}`;
-      tooltip.style.display = 'block';
-      positionTooltip(e, tooltip, wrap);
-    });
-    el.addEventListener('mousemove', e => positionTooltip(e, tooltip, wrap));
-    el.addEventListener('mouseleave', () => { tooltip.style.display = 'none'; });
-  });
-}
-
-function positionTooltip(e, tip, wrap) {
-  const rect = wrap.getBoundingClientRect();
-  let left = e.clientX - rect.left + 12;
-  let top  = e.clientY - rect.top  - 40;
-  if (left + 200 > rect.width) left = e.clientX - rect.left - 210;
-  if (top < 0) top = 4;
-  tip.style.left = left + 'px';
-  tip.style.top  = top  + 'px';
-}
 
 // ── Row detail panel ───────────────────────────────────────────────────────────
 function openRowPanel(pid, lid) {
@@ -688,7 +608,6 @@ function switchTab(name) {
   if (mainEl) mainEl.scrollTop = 0;
 
   if (name === 'cities')   renderCities();
-  if (name === 'scatter')  renderScatter();
   if (name === 'formulas') updateFormulasTab();
 }
 
@@ -697,7 +616,6 @@ function renderAll() {
   renderLotteries();
   const activeTab = document.querySelector('.tab-pane.active')?.id.replace('tab-', '');
   if (activeTab === 'cities')  renderCities();
-  if (activeTab === 'scatter') renderScatter();
 }
 
 // ── Personal Profile settings persistence ──
@@ -932,6 +850,12 @@ function toast(msg) {
   setTimeout(() => el.classList.remove('show'), 2500);
 }
 
+function updateSyncBar(ts, count) {
+  const el = document.getElementById('sync-bar');
+  if (!el) return;
+  el.innerHTML = `עודכן: ${ts}  ·  ${count} הגרלות  ·  Created by <a href="https://www.linkedin.com/in/pini-matzner-phd-95a51813/" target="_blank" class="footer-link">Pini Matzner</a>`;
+}
+
 // ── Init ───────────────────────────────────────────────────────────────────────
 async function init() {
   try {
@@ -946,7 +870,7 @@ async function init() {
 
     allLotteries = data.lotteries;
     const ts = data.generated_at ? new Date(data.generated_at).toLocaleString('he-IL') : '—';
-    document.getElementById('sync-bar').textContent = `עודכן: ${ts}  ·  ${allLotteries.length} הגרלות`;
+    updateSyncBar(ts, allLotteries.length);
 
     populateCityFilter(data.cities);
     loadUserProfile();
@@ -1088,68 +1012,15 @@ document.addEventListener('DOMContentLoaded', () => {
     renderLotteries();
   });
 
-  // Hide refresh button on GitHub Pages since it has no python backend
-  if (window.location.hostname.endsWith('github.io')) {
-    const refreshBtn = document.getElementById('refresh-btn');
-    if (refreshBtn) {
-      refreshBtn.style.display = 'none';
-    }
+  // Theme Toggle
+  const themeBtn = document.getElementById('theme-toggle-btn');
+  if (themeBtn) {
+    themeBtn.addEventListener('click', () => {
+      currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('dira_theme', currentTheme);
+      applyTheme();
+    });
   }
-
-  // Refresh button — 10-min cooldown to avoid WAF rate-limiting
-  const REFRESH_COOLDOWN_MS = 10 * 60 * 1000;
-  document.getElementById('refresh-btn').addEventListener('click', async () => {
-    if (window.location.hostname.endsWith('github.io')) {
-      toast('רענון ישיר אינו זמין ב-GitHub Pages. הנתונים מתעדכנים אוטומטית (כל 12 שעות).');
-      return;
-    }
-
-    const btn = document.getElementById('refresh-btn');
-    const lastRefresh = parseInt(localStorage.getItem('dira_last_refresh') || '0');
-    const sinceLastMs = Date.now() - lastRefresh;
-    if (sinceLastMs < REFRESH_COOLDOWN_MS) {
-      const minsLeft = Math.ceil((REFRESH_COOLDOWN_MS - sinceLastMs) / 60000);
-      toast(`המתן עוד ${minsLeft} דק׳ לפני רענון נוסף`);
-      return;
-    }
-
-    const passcode = prompt('אנא הזן קוד רענון:');
-    if (!passcode) return;
-
-    btn.textContent = '⏳';
-    btn.disabled = true;
-    localStorage.setItem('dira_last_refresh', Date.now());
-    try {
-      const res = await fetch(`/refresh?code=${encodeURIComponent(passcode)}`, { method: 'POST' });
-      
-      if (res.status === 401) {
-        toast('קוד שגוי. הרענון נכשל.');
-        return;
-      }
-
-      const data = await res.json().catch(() => ({}));
-      if (res.ok && data.ok) {
-        // Reload data.json and re-render
-        const r = await fetch(DATA_URL + '?t=' + Date.now());
-        const d = await r.json();
-        allLotteries = d.lotteries;
-        const ts = d.generated_at ? new Date(d.generated_at).toLocaleString('he-IL') : '—';
-        document.getElementById('sync-bar').textContent = `עודכן: ${ts}  ·  ${allLotteries.length} הגרלות`;
-        renderAll();
-        toast('נתונים עודכנו בהצלחה ✓');
-      } else {
-        const detail = data.error || (data.scraper || '').slice(-120) || 'שגיאה לא ידועה';
-        console.error('Refresh failed:', data);
-        toast('שגיאה: ' + detail);
-      }
-    } catch (e) {
-      console.error('Refresh exception:', e);
-      toast('שגיאה: ' + e.message);
-    } finally {
-      btn.textContent = '🔄';
-      btn.disabled = false;
-    }
-  });
 
   // Settings panel
   document.getElementById('settings-btn').addEventListener('click', () => {
@@ -1180,8 +1051,5 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('row-close').addEventListener('click', closeRow);
   document.getElementById('row-overlay').addEventListener('click', closeRow);
 
-  // Re-render scatter on resize
-  window.addEventListener('resize', () => {
-    if (document.getElementById('tab-scatter').classList.contains('active')) renderScatter();
-  });
+
 });

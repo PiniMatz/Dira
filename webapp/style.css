@@ -789,68 +789,6 @@ button {
   text-shadow: 0 0 8px rgba(74, 222, 128, 0.15);
 }
 
-/* ── Sweet Spot Chart Card ───────────────────────────────────────────────────── */
-.chart-card {
-  padding: 24px;
-  background: rgba(15, 23, 42, 0.45);
-}
-.chart-header {
-  margin-bottom: 16px;
-}
-.chart-title {
-  font-size: 16px;
-  font-weight: 800;
-  color: #fff;
-}
-.chart-subtitle {
-  font-size: 11px;
-  color: var(--muted);
-  display: block;
-  margin-top: 2px;
-}
-.scatter-hint {
-  font-size: 11px;
-  color: var(--muted);
-  margin-bottom: 16px;
-  text-align: center;
-}
-#scatter-wrap {
-  position: relative;
-  width: 100%;
-  background: rgba(0, 0, 0, 0.2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 10px;
-}
-#scatter-svg {
-  width: 100%;
-  display: block;
-}
-.bubble {
-  cursor: pointer;
-  transition: var(--transition);
-}
-.bubble:hover {
-  fill-opacity: 0.95;
-  stroke-width: 2.5px;
-  stroke: #fff !important;
-}
-
-.scatter-tooltip {
-  position: absolute;
-  pointer-events: none;
-  background: var(--surface-solid);
-  border: 1px solid var(--border-active);
-  border-radius: var(--radius-sm);
-  padding: 10px 14px;
-  font-size: 12px;
-  max-width: 220px;
-  line-height: 1.6;
-  z-index: 100;
-  display: none;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(8px);
-}
 
 /* ── Formulas & Guide Grid ───────────────────────────────────────────────────── */
 .formulas-grid {
@@ -1193,7 +1131,6 @@ button {
   filter: drop-shadow(0 0 5px rgba(59, 130, 246, 0.4));
 }
 
-/* ── Sync Bar Footer ─────────────────────────────────────────────────────────── */
 .sync-bar {
   height: var(--sync-h);
   background: #090d16;
@@ -1209,6 +1146,18 @@ button {
   color: var(--muted);
   letter-spacing: 0.02em;
   z-index: 100;
+}
+.footer-link {
+  color: #60a5fa;
+  text-decoration: none;
+  font-weight: 600;
+  margin-right: 4px;
+  margin-left: 4px;
+  transition: var(--transition);
+}
+.footer-link:hover {
+  color: #93c5fd;
+  text-decoration: underline;
 }
 
 /* ── Toast Notifications ─────────────────────────────────────────────────────── */
@@ -1340,4 +1289,210 @@ button {
 .profile-select option {
   background: #0f172a;
   color: #fff;
+}
+
+/* ── Mobile Layout Adjustments ────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .profile-inputs {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    width: 100%;
+  }
+  .profile-inputs .checkbox-chip {
+    width: 100%;
+  }
+  .profile-inputs .input-with-label {
+    justify-content: space-between;
+    width: 100%;
+  }
+  .profile-select {
+    width: 55%;
+    max-width: 200px;
+  }
+}
+@media (max-width: 380px) {
+  .nav-tab {
+    font-size: 10px;
+    padding: 8px 2px;
+  }
+  .nav-icon {
+    font-size: 16px;
+  }
+}
+
+/* ── Light Theme Overrides ─────────────────────────────────────────────────────── */
+body.light-theme {
+  --bg:           #f8fafc; /* Slate 50 */
+  --surface:      rgba(255, 255, 255, 0.7);
+  --surface-solid:#ffffff;
+  --surface-hover:rgba(241, 245, 249, 0.8);
+  --border:       rgba(15, 23, 42, 0.08);
+  --border-active:rgba(99, 102, 241, 0.3);
+  --text:         #0f172a; /* Slate 900 */
+  --sub:          #334155; /* Slate 700 */
+  --muted:        #64748b; /* Slate 500 */
+  
+  --blue:         #1d4ed8;
+  --indigo:       #4338ca;
+  --blue-glow:    rgba(37, 99, 235, 0.08);
+  --indigo-glow:  rgba(79, 70, 229, 0.12);
+  --green:        #047857;
+  --yellow:       #b45309;
+}
+
+body.light-theme .sync-bar {
+  background: #f1f5f9;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  color: #475569;
+}
+body.light-theme .glass-container {
+  background: rgba(255, 255, 255, 0.45);
+  box-shadow: 0 8px 32px rgba(15, 23, 42, 0.05);
+}
+body.light-theme .app-header {
+  background: rgba(255, 255, 255, 0.75);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+body.light-theme .table-card {
+  background: rgba(255, 255, 255, 0.75);
+}
+body.light-theme #lottery-table thead tr {
+  background: rgba(241, 245, 249, 0.8);
+}
+body.light-theme #lottery-table th {
+  background: rgba(241, 245, 249, 0.9);
+  color: #1e293b;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+body.light-theme #lottery-table tr:hover {
+  background: rgba(241, 245, 249, 0.5);
+}
+body.light-theme #lottery-table tr.highlight-row {
+  background: rgba(59, 130, 246, 0.08);
+}
+body.light-theme #lottery-table tr.highlight-row:hover {
+  background: rgba(59, 130, 246, 0.12);
+}
+body.light-theme .bottom-nav {
+  background: rgba(255, 255, 255, 0.8);
+}
+body.light-theme .nav-tab:hover {
+  background: rgba(0, 0, 0, 0.02);
+}
+body.light-theme .nav-tab.active {
+  background: rgba(59, 130, 246, 0.06);
+}
+body.light-theme .slider-widget, 
+body.light-theme .filters-container,
+body.light-theme .stat-card,
+body.light-theme .formula-section,
+body.light-theme .city-card {
+  background: rgba(255, 255, 255, 0.75);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+}
+body.light-theme .filter-days-input,
+body.light-theme .profile-select {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(0, 0, 0, 0.1);
+  color: #0f172a;
+}
+body.light-theme .profile-select option {
+  background: #ffffff;
+  color: #0f172a;
+}
+body.light-theme .formula-box {
+  background: rgba(241, 245, 249, 0.8);
+  color: #1e293b;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+body.light-theme .drawer-panel {
+  background: #ffffff;
+}
+body.light-theme .glow-orb.orb-1 {
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+}
+body.light-theme .glow-orb.orb-2 {
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+}
+body.light-theme .glow-orb.orb-3 {
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, rgba(0, 0, 0, 0) 70%);
+}
+body.light-theme .checkbox-chip {
+  background: rgba(0, 0, 0, 0.04);
+  color: #334155;
+  border-color: rgba(0, 0, 0, 0.06);
+}
+body.light-theme .checkbox-chip:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+body.light-theme .city-chip {
+  background: rgba(0, 0, 0, 0.04);
+  color: #334155;
+}
+body.light-theme .city-chip:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+body.light-theme .city-chip.active {
+  background: var(--blue);
+  color: #ffffff;
+}
+body.light-theme .sort-btn {
+  background: rgba(0, 0, 0, 0.03);
+  color: #475569;
+}
+body.light-theme .sort-btn:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+body.light-theme .sort-btn.active {
+  background: var(--blue-glow);
+  color: var(--blue);
+}
+body.light-theme .btn-clear {
+  color: var(--blue);
+}
+body.light-theme .btn-clear:hover {
+  background: rgba(0, 0, 0, 0.03);
+}
+body.light-theme .header-badge {
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--blue);
+}
+body.light-theme .btn-header {
+  background: rgba(0, 0, 0, 0.03);
+  color: #334155;
+  border-color: rgba(0, 0, 0, 0.06);
+}
+body.light-theme .btn-header:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+body.light-theme .footer-link {
+  color: var(--blue);
+}
+body.light-theme .footer-link:hover {
+  color: var(--indigo);
+}
+body.light-theme .market-price-item {
+  border-bottom-color: rgba(0, 0, 0, 0.06);
+}
+body.light-theme .market-price-input {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.1);
+  color: #0f172a;
+}
+body.light-theme .row-detail-panel {
+  background: #ffffff;
+  box-shadow: -8px 0 32px rgba(15, 23, 42, 0.1);
+}
+body.light-theme .row-field {
+  border-bottom-color: rgba(0, 0, 0, 0.05);
+}
+body.light-theme .row-section {
+  background: rgba(0, 0, 0, 0.02);
+}
+body.light-theme ::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+}
+body.light-theme ::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.25);
 }
