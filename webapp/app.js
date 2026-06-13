@@ -853,7 +853,13 @@ function toast(msg) {
 function updateSyncBar(ts, count) {
   const el = document.getElementById('sync-bar');
   if (!el) return;
-  el.innerHTML = `עודכן: ${ts}  ·  ${count} הגרלות  ·  Created by <a href="https://www.linkedin.com/in/pini-matzner-phd-95a51813/" target="_blank" class="footer-link">Pini Matzner</a>`;
+  el.innerHTML = `
+    <span>עודכן: ${ts}</span>
+    <span class="sync-divider">·</span>
+    <span>${count} הגרלות</span>
+    <span class="sync-divider">·</span>
+    <span dir="ltr">Created by <a href="https://www.linkedin.com/in/pini-matzner-phd-95a51813/" target="_blank" class="footer-link">Pini Matzner</a></span>
+  `;
 }
 
 // ── Init ───────────────────────────────────────────────────────────────────────
