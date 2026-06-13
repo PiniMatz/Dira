@@ -203,6 +203,25 @@ const fmt = {
   pct:    v => v == null ? '—'  : (v * 100).toFixed(1) + '%',
   price:  v => v == null ? '—'  : '₪' + Math.round(v).toLocaleString(),
   num:    v => v == null ? '—'  : v.toLocaleString(),
+  shortPrice: v => {
+    if (v == null || isNaN(v)) return '—';
+    if (v >= 1000000) {
+      return '₪' + Number((v / 1000000).toFixed(2)) + 'M';
+    }
+    if (v >= 1000) {
+      return '₪' + Math.round(v / 1000) + 'K';
+    }
+    return '₪' + Math.round(v);
+  },
+  priceRange100: (min, max) => {
+    if (!min && !max) return '—';
+    const min100 = min ? min * 100 : null;
+    const max100 = max ? max * 100 : null;
+    if (!min100) return fmt.shortPrice(max100);
+    if (!max100) return fmt.shortPrice(min100);
+    if (Math.round(min100) === Math.round(max100)) return fmt.shortPrice(min100);
+    return `${fmt.shortPrice(min100)} – ${fmt.shortPrice(max100)}`;
+  }
 };
 
 function oddsClass(v) {
@@ -350,22 +369,47 @@ function renderCities() {
   });
 
   const wrap = document.getElementById('city-cards');
-  wrap.innerHTML = stats.map(s => `
-    <div class="city-card" data-city="${s.city}">
-      <div class="city-card-header">
-        <span class="city-name">${s.city}</span>
-        <span class="city-agg-odds ${oddsClass(s.aggOdds)}">${fmt.pct(s.aggOdds)}</span>
+  wrap.innerHTML = stats.map(s => {
+    const mkt = marketPrices[s.city]?.market_per_meter;
+    const mktPrice100 = mkt ? mkt * 100 : null;
+    
+    let saving100 = null;
+    if (mktPrice100 && s.minPrice && s.maxPrice) {
+      const avgLotPrice100 = ((s.minPrice + s.maxPrice) / 2) * 100;
+      saving100 = Math.max(0, mktPrice100 - avgLotPrice100);
+    }
+
+    return `
+      <div class="city-card" data-city="${s.city}">
+        <div class="city-card-header">
+          <span class="city-name">${s.city}</span>
+          <span class="city-agg-odds ${oddsClass(s.aggOdds)}">${fmt.pct(s.aggOdds)}</span>
+        </div>
+        <div class="city-row">
+          <span class="city-stat"><strong>${s.count}</strong> הגרלות</span>
+          <span class="city-stat"><strong>${s.totalApts}</strong> דירות זכאים</span>
+          <span class="city-stat"><strong>${s.totalActive}</strong> מילואים</span>
+          <span class="city-stat">₪${Math.round(s.minPrice ?? 0).toLocaleString()}–${Math.round(s.maxPrice ?? 0).toLocaleString()}/מ׳</span>
+          <span class="city-stat ${discountClass(s.avgDiscount)}">הנחה ${fmt.pct(s.avgDiscount)}</span>
+          <span class="city-stat">סיכוי מיטבי <strong class="${oddsClass(s.bestOdds)}">${fmt.pct(s.bestOdds)}</strong></span>
+        </div>
+        <div class="city-price-comparison">
+          <div class="price-comp-row">
+            <span class="price-comp-label">דירת 100 מ״ר בהגרלה:</span>
+            <span class="price-comp-value lot-price">${fmt.priceRange100(s.minPrice, s.maxPrice)}</span>
+          </div>
+          <div class="price-comp-row">
+            <span class="price-comp-label">מחיר שוק מוערך:</span>
+            <span class="price-comp-value market-price">${fmt.shortPrice(mktPrice100)}</span>
+          </div>
+          <div class="price-comp-row saving-row">
+            <span class="price-comp-label">חיסכון משוער:</span>
+            <span class="price-comp-value saving-value">${fmt.shortPrice(saving100)}</span>
+          </div>
+        </div>
       </div>
-      <div class="city-row">
-        <span class="city-stat"><strong>${s.count}</strong> הגרלות</span>
-        <span class="city-stat"><strong>${s.totalApts}</strong> דירות זכאים</span>
-        <span class="city-stat"><strong>${s.totalActive}</strong> מילואים</span>
-        <span class="city-stat">₪${Math.round(s.minPrice ?? 0).toLocaleString()}–${Math.round(s.maxPrice ?? 0).toLocaleString()}/מ׳</span>
-        <span class="city-stat ${discountClass(s.avgDiscount)}">הנחה ${fmt.pct(s.avgDiscount)}</span>
-        <span class="city-stat">סיכוי מיטבי <strong class="${oddsClass(s.bestOdds)}">${fmt.pct(s.bestOdds)}</strong></span>
-      </div>
-    </div>
-  `).join('');
+    `;
+  }).join('');
 
   wrap.querySelectorAll('.city-card').forEach(card => {
     card.addEventListener('click', () => {
