@@ -129,6 +129,29 @@
                 </div>
               </div>
             </div>
+
+            <!-- Personal Eligibility Profile -->
+            <div class="profile-settings-row">
+              <span class="filter-label">פרופיל זכאות אישי (משפיע על חישוב סיכוי שלי):</span>
+              <div class="profile-inputs">
+                <label class="checkbox-chip">
+                  <input type="checkbox" id="user-reservist" checked>
+                  <span class="checkbox-custom"></span>
+                  משרת מילואים פעיל
+                </label>
+                <label class="checkbox-chip">
+                  <input type="checkbox" id="user-combat">
+                  <span class="checkbox-custom"></span>
+                  לוחם קרבי
+                </label>
+                <div class="input-with-label">
+                  <span>מקומי בעיר (בן מקום):</span>
+                  <select id="user-local-city" class="profile-select">
+                    <option value="">— לא בן מקום —</option>
+                  </select>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -251,12 +274,12 @@
           </div>
 
           <div class="formula-section glass-card" style="grid-column: span 2;">
-            <div class="formula-section-title">🛡️ סיכוי שלי — מילואים עורף (לא לוחם)</div>
-            <p class="formula-desc">
+            <div class="formula-section-title" id="formula-title">🛡️ סיכוי שלי — מילואים עורף (לא לוחם)</div>
+            <p class="formula-desc" id="formula-desc">
               חישוב דו-שלבי מורכב: סיכוי לזכות בשלב 3 (מילואים עורף), ובמקרה של הפסד - סיכוי לזכות בהגרלה הכללית (שלב 5) שמשודרגת בעודפי מכסות בני מקום.
               כעת, אחוז המילואים המקומי מותאם אישית לפי צפיפות המילואימניקים בעיר על פי נתוני צה"ל 2025.
             </p>
-            <div class="formula-box">━━ סינון נרשמים זכאים ━━
+            <div class="formula-box" id="formula-box">━━ סינון נרשמים זכאים ━━
 N_eligible = N × E_city
 N_local_eligible = N_local × E_city
 

@@ -17,6 +17,11 @@ let filterReservist = false;
 let filterNoReligious = false;
 let filterMaxDays = null;
 
+// User Profile settings (local storage persistent)
+let userIsReservist = true;
+let userIsCombat    = false;
+let userLocalCity   = '';
+
 // City enlistment/service eligibility rates (Knesset Research Center report, Jan 2026)
 const CITY_ELIGIBILITY = {
   // Haredi
@@ -147,26 +152,48 @@ function computeOdds(lot, p) {
   // City-specific reservist ratio scaled by IDF density statistics
   const p_city = getCityReservistRatio(lot.city, p);
 
-  // Stage 1: non-combat active-reservist quota odds
-  // Deflate active reservist competitors using N_eligible since only serving people are eligible
-  // Combat winners (ac) already exited in Stage 2 — subtract them from the reservist pool
+  // Stage 2: Combat reservists quota
+  const p_combat_city = 0.5 * p_city;
+  const R_combat = Math.max(ac, p_combat_city * N_eligible);
+  const P_combat = ac > 0 ? Math.min(1, ac / R_combat) : 0;
+
+  // Stage 3: Active reservists quota
   const R = Math.max(ar, p_city * N_eligible - ac);
-  const P1 = ar > 0 ? Math.min(1, ar / R) : 0;
+  const P_active = ar > 0 ? Math.min(1, ar / R) : 0;
 
-  // Stage 2: local resident quota
-  // Calculate how many apartments are actually allocated to local residents
+  // Stage 4: Local resident quota
   const W_local = Math.min(al, N_local_eligible);
+  const P_local = al > 0 ? Math.min(1, al / N_local_eligible) : 0;
 
-  // Stage 3: open pool
-  // Unused local apartments overflow to the open pool: A - ah - ac - ar - W_local
+  // Stage 5: General open pool
   const ao_updated = Math.max(0, A - (ah + ac + ar + W_local));
-
-  // Competitors in the open pool (all remaining eligible registrants who haven't won a quota yet)
   const openCompetitors = Math.max(ao_updated, N_eligible - (ah + ac + ar + W_local));
-  const P2 = ao_updated > 0 ? Math.min(1, ao_updated / openCompetitors) : 0;
+  const P_open = ao_updated > 0 ? Math.min(1, ao_updated / openCompetitors) : 0;
 
-  const pini = P1 + (1 - P1) * P2;
-  
+  // Calculate cumulative failure probability across stages
+  let p_fail = 1.0;
+
+  if (userIsReservist) {
+    if (userIsCombat) {
+      // Combat Reservist: Stage 2 -> Stage 3 -> Stage 4 (if local) -> Stage 5
+      p_fail *= (1 - P_combat);
+      p_fail *= (1 - P_active);
+    } else {
+      // Active Reservist (Non-combat): Stage 3 -> Stage 4 (if local) -> Stage 5
+      p_fail *= (1 - P_active);
+    }
+  }
+
+  if (lot.city === userLocalCity) {
+    // Local resident: Stage 4
+    p_fail *= (1 - P_local);
+  }
+
+  // Everyone enters the general open pool
+  p_fail *= (1 - P_open);
+
+  const pini = 1 - p_fail;
+
   return { 
     pini: Math.min(1, pini), 
     baseline: Math.min(1, baseline),
@@ -651,7 +678,6 @@ function loadOverrides() {
   } catch {}
 }
 
-// ── Tab switching ──────────────────────────────────────────────────────────────
 function switchTab(name) {
   document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
@@ -661,8 +687,9 @@ function switchTab(name) {
   const mainEl = document.getElementById('main');
   if (mainEl) mainEl.scrollTop = 0;
 
-  if (name === 'cities')  renderCities();
-  if (name === 'scatter') renderScatter();
+  if (name === 'cities')   renderCities();
+  if (name === 'scatter')  renderScatter();
+  if (name === 'formulas') updateFormulasTab();
 }
 
 // ── Render all ─────────────────────────────────────────────────────────────────
@@ -671,6 +698,157 @@ function renderAll() {
   const activeTab = document.querySelector('.tab-pane.active')?.id.replace('tab-', '');
   if (activeTab === 'cities')  renderCities();
   if (activeTab === 'scatter') renderScatter();
+}
+
+// ── Personal Profile settings persistence ──
+const PROFILE_LS_KEY = 'dira_user_profile';
+
+function saveUserProfile() {
+  const profile = {
+    userIsReservist,
+    userIsCombat,
+    userLocalCity
+  };
+  localStorage.setItem(PROFILE_LS_KEY, JSON.stringify(profile));
+}
+
+function loadUserProfile() {
+  const raw = localStorage.getItem(PROFILE_LS_KEY);
+  if (raw) {
+    try {
+      const profile = JSON.parse(raw);
+      userIsReservist = profile.userIsReservist ?? true;
+      userIsCombat = profile.userIsCombat ?? false;
+      userLocalCity = profile.userLocalCity ?? '';
+    } catch (e) {
+      console.error('Failed to parse user profile', e);
+    }
+  }
+}
+
+function populateLocalCityDropdown(cities) {
+  const select = document.getElementById('user-local-city');
+  if (!select) return;
+  select.innerHTML = '<option value="">— לא בן מקום —</option>';
+  const sorted = [...cities].sort((a, b) => a.localeCompare(b, 'he'));
+  for (const city of sorted) {
+    const opt = document.createElement('option');
+    opt.value = city;
+    opt.textContent = city;
+    select.appendChild(opt);
+  }
+}
+
+function updateFormulasTab() {
+  const titleEl = document.getElementById('formula-title');
+  const descEl = document.getElementById('formula-desc');
+  const boxEl = document.getElementById('formula-box');
+  if (!titleEl || !descEl || !boxEl) return;
+
+  let title = '🛡️ סיכוי שלי — ';
+  let desc = '';
+  let box = '';
+
+  if (userIsReservist) {
+    if (userIsCombat) {
+      title += 'לוחם מילואים';
+    } else {
+      title += 'משרת מילואים פעיל (עורף)';
+    }
+  } else {
+    title += 'לא משרת מילואים';
+  }
+
+  if (userLocalCity) {
+    title += ` + בן מקום ב${userLocalCity}`;
+  } else {
+    title += ' (לא בן מקום)';
+  }
+
+  box += `━━ סינון נרשמים זכאים ━━\n`;
+  box += `N_eligible = N × E_city\n`;
+  box += `N_local_eligible = N_local × E_city\n\n`;
+
+  if (userIsReservist) {
+    box += `━━ התאמת אחוז מילואים עירוני (p_city) ━━\n`;
+    box += `p_city = p × (Density_city / 3.5)       [בערים עם נתונים מדווחים]\n`;
+    box += `p_city = p × (E_city / 0.85)             [בכל שאר הערים]\n\n`;
+  }
+
+  let stagesList = [];
+  let mathP = [];
+
+  if (userIsReservist) {
+    if (userIsCombat) {
+      stagesList.push('שלב 2 (מכסת לוחמים)');
+      stagesList.push('שלב 3 (מכסת מילואים עורף/פעילים)');
+      box += `━━ שלב 2: מכסת לוחמים ━━\n`;
+      box += `p_combat_city = 0.5 × p_city\n`;
+      box += `R_combat = max(ac, p_combat_city × N_eligible)\n`;
+      box += `P_combat = ac / R_combat                  [אם ac > 0]\n\n`;
+      mathP.push('P_combat');
+    } else {
+      stagesList.push('שלב 3 (מכסת מילואים עורף/פעילים)');
+    }
+    box += `━━ שלב 3: מכסת משרתי עורף ━━\n`;
+    box += `R_active = max(ar, p_city × N_eligible − ac)\n`;
+    box += `P_active = ar / R_active                  [אם ar > 0]\n\n`;
+    mathP.push('P_active');
+  }
+
+  if (userLocalCity) {
+    stagesList.push('שלב 4 (מכסת בני מקום)');
+    box += `━━ שלב 4: מכסת בני מקום ━━\n`;
+    box += `P_local = al / N_local_eligible           [אם al > 0 בעיר המגורים שלך]\n\n`;
+    mathP.push('P_local');
+  }
+
+  stagesList.push('שלב 5 (הגרלה כללית)');
+  box += `━━ שלב 4 (כללי): עודף בני מקום (זרימה כללית) ━━\n`;
+  box += `W_local = min(al, N_local_eligible)\n`;
+  box += `ao_updated = max(0, A − ah − ac − ar − W_local)\n\n`;
+  box += `━━ שלב 5: הגרלה כללית מותאמת ━━\n`;
+  box += `openComp = max(ao_updated, N_eligible − ah − ac − ar − W_local)\n`;
+  box += `P_open = ao_updated / openComp            [אם ao_updated > 0]\n\n`;
+  mathP.push('P_open');
+
+  desc = `חישוב סיכוי אישי עוקב המבוסס על שלבי ההגרלה הרלוונטיים לפרופיל שלך: ${stagesList.join(' ← ')}.`;
+  if (userIsReservist) {
+    desc += ` מקדם המילואים העירוני (p_city) מותאם אישית לפי צפיפות המילואימניקים בעיר על פי נתוני צה"ל 2025.`;
+  }
+
+  box += `━━ סיכוי כולל (חישוב הסתברות משלימה) ━━\n`;
+  if (mathP.length === 1) {
+    box += `סיכוי שלי = ${mathP[0]}`;
+  } else {
+    const pTerms = mathP.map(p => `(1 − ${p})`).join(' × ');
+    box += `סיכוי שלי = 1 − ${pTerms}`;
+  }
+
+  titleEl.textContent = title;
+  descEl.textContent = desc;
+  boxEl.textContent = box;
+}
+
+function initUserProfileDOM(cities) {
+  populateLocalCityDropdown(cities);
+  
+  const checkReservist = document.getElementById('user-reservist');
+  const checkCombat = document.getElementById('user-combat');
+  const selectLocalCity = document.getElementById('user-local-city');
+  
+  if (checkReservist) {
+    checkReservist.checked = userIsReservist;
+  }
+  if (checkCombat) {
+    checkCombat.checked = userIsCombat;
+    checkCombat.disabled = !userIsReservist;
+  }
+  if (selectLocalCity) {
+    selectLocalCity.value = userLocalCity;
+  }
+  
+  updateFormulasTab();
 }
 
 // ── City chips ─────────────────────────────────────────────────────────────────
@@ -719,6 +897,8 @@ async function init() {
     document.getElementById('sync-bar').textContent = `עודכן: ${ts}  ·  ${allLotteries.length} הגרלות`;
 
     populateCityFilter(data.cities);
+    loadUserProfile();
+    initUserProfileDOM(data.cities);
     renderLotteries();
   } catch (e) {
     document.getElementById('sync-bar').textContent = 'שגיאה בטעינת נתונים';
@@ -786,6 +966,49 @@ document.addEventListener('DOMContentLoaded', () => {
       renderCities();
     });
   });
+
+  // Profile settings
+  const checkReservist = document.getElementById('user-reservist');
+  const checkCombat = document.getElementById('user-combat');
+  const selectLocalCity = document.getElementById('user-local-city');
+
+  if (checkReservist) {
+    checkReservist.addEventListener('change', e => {
+      userIsReservist = e.target.checked;
+      if (!userIsReservist) {
+        userIsCombat = false;
+        if (checkCombat) {
+          checkCombat.checked = false;
+          checkCombat.disabled = true;
+        }
+      } else {
+        if (checkCombat) {
+          checkCombat.disabled = false;
+        }
+      }
+      saveUserProfile();
+      renderAll();
+      updateFormulasTab();
+    });
+  }
+
+  if (checkCombat) {
+    checkCombat.addEventListener('change', e => {
+      userIsCombat = e.target.checked;
+      saveUserProfile();
+      renderAll();
+      updateFormulasTab();
+    });
+  }
+
+  if (selectLocalCity) {
+    selectLocalCity.addEventListener('change', e => {
+      userLocalCity = e.target.value;
+      saveUserProfile();
+      renderAll();
+      updateFormulasTab();
+    });
+  }
 
   // Checkboxes
   document.getElementById('filter-reservist').addEventListener('change', e => {
