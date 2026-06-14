@@ -176,11 +176,11 @@ function computeOdds(lot, p) {
 
   // Stage 2: Combat reservists quota
   const p_combat_city = 0.5 * p_city;
-  const R_combat = Math.max(ac, p_combat_city * N_eligible);
+  const R_combat = Math.max(ac, p_combat_city * N);
   const P_combat = ac > 0 ? Math.min(1, ac / R_combat) : 0;
 
   // Stage 3: Active reservists quota
-  const R = Math.max(ar, p_city * N_eligible - ac);
+  const R = Math.max(ar, p_city * N - ac);
   const P_active = ar > 0 ? Math.min(1, ar / R) : 0;
 
   // Stage 4: Local resident quota
