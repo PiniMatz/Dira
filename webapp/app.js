@@ -22,6 +22,10 @@ let userIsReservist = true;
 let userIsCombat    = false;
 let userLocalCity   = '';
 
+// Active detail panel tracking
+let activeDetailPid = null;
+let activeDetailLid = null;
+
 // Theme settings (persistent)
 let currentTheme = localStorage.getItem('dira_theme') || 'dark';
 function applyTheme() {
@@ -346,11 +350,6 @@ function renderLotteries() {
     </tr>`;
   }).join('');
 
-  tbody.querySelectorAll('tr').forEach(tr => {
-    tr.addEventListener('click', () => openRowPanel(
-      parseInt(tr.dataset.pid), parseInt(tr.dataset.lid)
-    ));
-  });
   updateSummaryStats();
 }
 
@@ -484,18 +483,6 @@ function renderCities() {
       </div>
     `;
   }).join('');
-
-  wrap.querySelectorAll('.city-card').forEach(card => {
-    card.addEventListener('click', () => {
-      filterCities.clear();
-      filterCities.add(card.dataset.city);
-      document.querySelectorAll('.city-chip').forEach(b => {
-        b.classList.toggle('active', filterCities.has(b.dataset.city));
-      });
-      switchTab('lotteries');
-      renderLotteries();
-    });
-  });
 }
 
 
@@ -503,6 +490,8 @@ function renderCities() {
 function openRowPanel(pid, lid) {
   const l = allLotteries.find(x => x.project_id === pid && x.lottery_id === lid);
   if (!l) return;
+  activeDetailPid = pid;
+  activeDetailLid = lid;
   const { pini, baseline, eRate, p_city, N_eligible, N_local_eligible, ao_updated, W_local, R_reservist } = computeOdds(l, sliderP);
   const disc  = discountPct(l);
   const days  = daysToClose(l);
@@ -645,6 +634,23 @@ function renderAll() {
   renderLotteries();
   const activeTab = document.querySelector('.tab-pane.active')?.id.replace('tab-', '');
   if (activeTab === 'cities')  renderCities();
+  if (activeDetailPid !== null && activeDetailLid !== null) {
+    openRowPanel(activeDetailPid, activeDetailLid);
+  }
+}
+
+function updateSliderWidgetState() {
+  const widget = document.querySelector('.slider-widget');
+  const input = document.getElementById('reservist-slider');
+  if (widget && input) {
+    if (userIsReservist) {
+      widget.classList.remove('disabled');
+      input.disabled = false;
+    } else {
+      widget.classList.add('disabled');
+      input.disabled = true;
+    }
+  }
 }
 
 // ── Personal Profile settings persistence ──
@@ -910,6 +916,7 @@ async function init() {
     populateCityFilter(data.cities);
     loadUserProfile();
     initUserProfileDOM(data.cities);
+    updateSliderWidgetState();
     renderLotteries();
   } catch (e) {
     document.getElementById('sync-bar').textContent = 'שגיאה בטעינת נתונים';
@@ -947,10 +954,14 @@ document.addEventListener('DOMContentLoaded', () => {
   // Slider
   const slider = document.getElementById('reservist-slider');
   const sliderLabel = document.getElementById('slider-pct');
+  let renderTimeout = null;
   slider.addEventListener('input', () => {
     sliderP = slider.value / 100;
     sliderLabel.textContent = slider.value + '%';
-    renderAll();
+    if (renderTimeout) cancelAnimationFrame(renderTimeout);
+    renderTimeout = requestAnimationFrame(() => {
+      renderAll();
+    });
   });
 
   // Tab nav
@@ -998,6 +1009,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
       saveUserProfile();
+      updateSliderWidgetState();
       renderAll();
       updateFormulasTab();
     });
@@ -1082,9 +1094,39 @@ document.addEventListener('DOMContentLoaded', () => {
   const closeRow = () => {
     document.getElementById('row-overlay').classList.remove('show');
     document.getElementById('row-panel').classList.remove('open');
+    activeDetailPid = null;
+    activeDetailLid = null;
   };
   document.getElementById('row-close').addEventListener('click', closeRow);
   document.getElementById('row-overlay').addEventListener('click', closeRow);
+
+  // Event delegation for table rows (lottery-tbody)
+  const tbody = document.getElementById('lottery-tbody');
+  if (tbody) {
+    tbody.addEventListener('click', (e) => {
+      const tr = e.target.closest('tr');
+      if (tr && tr.dataset.pid && tr.dataset.lid) {
+        openRowPanel(parseInt(tr.dataset.pid), parseInt(tr.dataset.lid));
+      }
+    });
+  }
+
+  // Event delegation for city cards (city-cards)
+  const cityCardsWrap = document.getElementById('city-cards');
+  if (cityCardsWrap) {
+    cityCardsWrap.addEventListener('click', (e) => {
+      const card = e.target.closest('.city-card');
+      if (card && card.dataset.city) {
+        filterCities.clear();
+        filterCities.add(card.dataset.city);
+        document.querySelectorAll('.city-chip').forEach(b => {
+          b.classList.toggle('active', filterCities.has(b.dataset.city));
+        });
+        switchTab('lotteries');
+        renderLotteries();
+      }
+    });
+  }
 
 
 });

@@ -241,6 +241,15 @@ button {
   flex-direction: column;
   justify-content: center;
   gap: 12px;
+  transition: opacity 0.2s ease, filter 0.2s ease;
+}
+.slider-widget.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+.slider-widget.disabled input[type="range"] {
+  filter: grayscale(1);
+  cursor: not-allowed;
 }
 .slider-header {
   display: flex;
