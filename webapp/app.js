@@ -641,14 +641,11 @@ function renderAll() {
 
 function updateSliderWidgetState() {
   const widget = document.querySelector('.slider-widget');
-  const input = document.getElementById('reservist-slider');
-  if (widget && input) {
+  if (widget) {
     if (userIsReservist) {
       widget.classList.remove('disabled');
-      input.disabled = false;
     } else {
       widget.classList.add('disabled');
-      input.disabled = true;
     }
   }
 }
@@ -958,6 +955,23 @@ document.addEventListener('DOMContentLoaded', () => {
   slider.addEventListener('input', () => {
     sliderP = slider.value / 100;
     sliderLabel.textContent = slider.value + '%';
+    
+    // Auto-enable reservist mode if they interact with the slider
+    if (!userIsReservist) {
+      userIsReservist = true;
+      const checkReservist = document.getElementById('user-reservist');
+      if (checkReservist) {
+        checkReservist.checked = true;
+      }
+      const checkCombat = document.getElementById('user-combat');
+      if (checkCombat) {
+        checkCombat.disabled = false;
+      }
+      saveUserProfile();
+      updateSliderWidgetState();
+      updateFormulasTab();
+    }
+    
     if (renderTimeout) cancelAnimationFrame(renderTimeout);
     renderTimeout = requestAnimationFrame(() => {
       renderAll();
