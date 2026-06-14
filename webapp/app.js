@@ -388,16 +388,35 @@ function cityStats() {
     const prices = lots.map(l => l.price_per_meter).filter(Boolean);
     const discs  = lots.map(l => discountPct(l)).filter(v => v != null);
     const piniOdds = lots.map(l => computeOdds(l, sliderP).pini).filter(v => v != null);
+    
+    const minPrice = prices.length ? Math.min(...prices) : null;
+    const maxPrice = prices.length ? Math.max(...prices) : null;
+    const aggOdds = cityAggregate(lots, sliderP);
+    
+    const mkt = marketPrices[city]?.market_per_meter;
+    const mktPrice100 = mkt ? mkt * 100 : null;
+    
+    let expectedSaving = 0;
+    let expectedRoi = 0;
+    
+    if (mktPrice100 && minPrice && maxPrice && aggOdds) {
+      const avgLotPrice100 = ((minPrice + maxPrice) / 2) * 100;
+      const saving100 = Math.max(0, mktPrice100 - avgLotPrice100);
+      expectedSaving = aggOdds * saving100;
+      expectedRoi = aggOdds * (saving100 / avgLotPrice100) * 100;
+    }
+    
     return {
       city, lots,
       count:     lots.length,
       totalApts: lots.reduce((s, l) => s + (l.apartments_for_eligible || 0), 0),
       totalActive: lots.reduce((s, l) => s + (l.reserve_active_units || 0), 0),
-      minPrice:  prices.length ? Math.min(...prices) : null,
-      maxPrice:  prices.length ? Math.max(...prices) : null,
+      minPrice, maxPrice,
       avgDiscount: discs.length ? discs.reduce((s, v) => s + v, 0) / discs.length : null,
       bestOdds:  piniOdds.length ? Math.max(...piniOdds) : null,
-      aggOdds:   cityAggregate(lots, sliderP),
+      aggOdds,
+      expectedSaving,
+      expectedRoi
     };
   });
 }
@@ -409,6 +428,8 @@ function renderCities() {
       case 'best_odds': return (b.bestOdds ?? -1) - (a.bestOdds ?? -1);
       case 'discount':  return (b.avgDiscount ?? -1) - (a.avgDiscount ?? -1);
       case 'price':     return (a.minPrice ?? 9e9) - (b.minPrice ?? 9e9);
+      case 'expected_saving': return b.expectedSaving - a.expectedSaving;
+      case 'expected_roi':    return b.expectedRoi - a.expectedRoi;
       default: return 0;
     }
   });
@@ -450,6 +471,14 @@ function renderCities() {
           <div class="price-comp-row saving-row">
             <span class="price-comp-label">חיסכון משוער:</span>
             <span class="price-comp-value saving-value">${fmt.shortPrice(saving100)}</span>
+          </div>
+          <div class="price-comp-row expected-row" style="border-top: 1px dashed var(--border); padding-top: 6px; margin-top: 6px;">
+            <span class="price-comp-label">תוחלת חיסכון (100 מ״ר):</span>
+            <span class="price-comp-value expected-saving" style="font-weight: 700; color: var(--blue);">${fmt.shortPrice(s.expectedSaving)}</span>
+          </div>
+          <div class="price-comp-row expected-row">
+            <span class="price-comp-label">תוחלת תשואה:</span>
+            <span class="price-comp-value expected-roi" style="font-weight: 700; color: var(--indigo);">${s.expectedRoi.toFixed(2)}%</span>
           </div>
         </div>
       </div>

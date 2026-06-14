@@ -219,6 +219,12 @@
             <button class="sort-btn" data-csort="price">
               <span class="sort-icon">💰</span>מחיר/מ׳
             </button>
+            <button class="sort-btn" data-csort="expected_saving">
+              <span class="sort-icon">💎</span>תוחלת חיסכון
+            </button>
+            <button class="sort-btn" data-csort="expected_roi">
+              <span class="sort-icon">📈</span>תוחלת תשואה
+            </button>
           </div>
         </div>
         <div id="city-cards" class="city-cards-grid"></div>
@@ -324,6 +330,22 @@ P2 = ao_updated / openComp               [אם ao_updated > 0]
             <table class="var-table">
               <tr><td>Pᵢ</td><td>הסיכוי שלי בהגרלה i באותה עיר</td></tr>
               <tr><td>∏</td><td>מכפלה על כל ההגרלות בעיר</td></tr>
+            </table>
+          </div>
+
+          <div class="formula-section glass-card">
+            <div class="formula-section-title">💎 תוחלת חיסכון ותשואה (Expected Value)</div>
+            <p class="formula-desc">
+              המדד המתמטי המאוחד לקבלת החלטות המשלב את סיכוי הזכייה המצטבר עם גובה ההטבה הכספית.
+            </p>
+            <div class="formula-box">
+תוחלת חיסכון (100 מ״ר) = סיכוי מצטבר × חיסכון ל-100 מ״ר
+
+תוחלת תשואה (Expected ROI) = סיכוי מצטבר × (חיסכון / מחיר רכישה)
+            </div>
+            <table class="var-table">
+              <tr><td>חיסכון</td><td>הפרש בין מחיר השוק החופשי הנוכחי למחיר המופחת בהגרלה</td></tr>
+              <tr><td>מחיר רכישה</td><td>המחיר הממוצע של דירת 100 מ״ר בהגרלה</td></tr>
             </table>
           </div>
 
