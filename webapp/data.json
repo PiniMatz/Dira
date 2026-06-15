@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-15T03:43:39Z",
+  "generated_at": "2026-06-15T17:09:27Z",
   "cities": [
     "אילת",
     "אשדוד",
@@ -46,13 +46,13 @@
       "developer": "ליאם נחמיאס חברה לבניין בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/79632/2711/ProjectInfo",
-      "registrants": 7514,
-      "registrants_local": 1695,
+      "registrants": 7596,
+      "registrants_local": 1707,
       "registrants_handicapped": 4,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 7503,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 78602,
@@ -78,13 +78,13 @@
       "developer": "עמרם אברהם חברה לבנין בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/78602/2675/ProjectInfo",
-      "registrants": 13695,
-      "registrants_local": 4035,
+      "registrants": 13843,
+      "registrants_local": 4079,
       "registrants_handicapped": 9,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 13675,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 79452,
@@ -110,13 +110,13 @@
       "developer": "פרץ לוזון, בנין ופתוח בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/79452/2749/ProjectInfo",
-      "registrants": 20207,
-      "registrants_local": 390,
+      "registrants": 20438,
+      "registrants_local": 391,
       "registrants_handicapped": 10,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 20176,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 79451,
@@ -142,13 +142,13 @@
       "developer": "גיא דורון לוי הנדסה בנייה והשקעות",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/79451/2748/ProjectInfo",
-      "registrants": 20350,
-      "registrants_local": 393,
+      "registrants": 20582,
+      "registrants_local": 394,
       "registrants_handicapped": 9,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 20319,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 79450,
@@ -174,13 +174,13 @@
       "developer": "י.ח. דמרי בניה ופיתוח בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/79450/2751/ProjectInfo",
-      "registrants": 19983,
-      "registrants_local": 386,
+      "registrants": 20213,
+      "registrants_local": 387,
       "registrants_handicapped": 8,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 19952,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 78339,
@@ -206,13 +206,13 @@
       "developer": "גרופית הנדסה אזרחית ועבודות ציבוריו",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/78339/2747/ProjectInfo",
-      "registrants": 20297,
-      "registrants_local": 383,
+      "registrants": 20531,
+      "registrants_local": 384,
       "registrants_handicapped": 8,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 20266,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 79453,
@@ -238,13 +238,13 @@
       "developer": "מגידו י.ק. יזום בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/79453/2750/ProjectInfo",
-      "registrants": 19890,
-      "registrants_local": 388,
+      "registrants": 20119,
+      "registrants_local": 389,
       "registrants_handicapped": 8,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 19859,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 78236,
@@ -270,13 +270,13 @@
       "developer": "עמרם אברהם חברה לבנין בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/78236/2677/ProjectInfo",
-      "registrants": 11320,
-      "registrants_local": 2824,
+      "registrants": 11486,
+      "registrants_local": 2866,
       "registrants_handicapped": 15,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 11287,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 78239,
@@ -302,13 +302,13 @@
       "developer": "סלם יעקב א.י. השקעות ונכסים בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/78239/2678/ProjectInfo",
-      "registrants": 11166,
-      "registrants_local": 2780,
+      "registrants": 11330,
+      "registrants_local": 2822,
       "registrants_handicapped": 15,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 11133,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 78237,
@@ -334,13 +334,13 @@
       "developer": "שי-חי יזמות והשקעות בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/78237/2676/ProjectInfo",
-      "registrants": 11321,
-      "registrants_local": 2774,
+      "registrants": 11489,
+      "registrants_local": 2817,
       "registrants_handicapped": 13,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 11289,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 77156,
@@ -366,13 +366,13 @@
       "developer": "שי-חי יזמות והשקעות בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/77156/2679/ProjectInfo",
-      "registrants": 11109,
-      "registrants_local": 2763,
+      "registrants": 11273,
+      "registrants_local": 2805,
       "registrants_handicapped": 15,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 11076,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 77146,
@@ -398,13 +398,13 @@
       "developer": "גילת מגורים",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/77146/2753/ProjectInfo",
-      "registrants": 7257,
-      "registrants_local": 115,
+      "registrants": 7361,
+      "registrants_local": 116,
       "registrants_handicapped": 3,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 7236,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 77145,
@@ -430,13 +430,13 @@
       "developer": "זוהר וצפריר שרבט בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/77145/2754/ProjectInfo",
-      "registrants": 7198,
-      "registrants_local": 118,
+      "registrants": 7302,
+      "registrants_local": 119,
       "registrants_handicapped": 3,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 7177,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 77147,
@@ -462,13 +462,13 @@
       "developer": "דרישטי נדל\"ן בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/77147/2755/ProjectInfo",
-      "registrants": 7014,
-      "registrants_local": 112,
+      "registrants": 7119,
+      "registrants_local": 113,
       "registrants_handicapped": 3,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 6993,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 75628,
@@ -494,13 +494,13 @@
       "developer": "שריקי גרופ יזמות ובניה בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/75628/2752/ProjectInfo",
-      "registrants": 7175,
-      "registrants_local": 120,
+      "registrants": 7286,
+      "registrants_local": 121,
       "registrants_handicapped": 4,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 7155,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 79515,
@@ -526,13 +526,13 @@
       "developer": "סלם יעקב א.י. השקעות ונכסים בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/79515/2756/ProjectInfo",
-      "registrants": 6855,
-      "registrants_local": 342,
+      "registrants": 6972,
+      "registrants_local": 344,
       "registrants_handicapped": 10,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 6839,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 79517,
@@ -558,13 +558,13 @@
       "developer": "ארקדי קליימן בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/79517/2758/ProjectInfo",
-      "registrants": 6575,
-      "registrants_local": 333,
+      "registrants": 6683,
+      "registrants_local": 335,
       "registrants_handicapped": 10,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 6560,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 79516,
@@ -590,13 +590,13 @@
       "developer": "בראל מכרזים למגורים בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/79516/2757/ProjectInfo",
-      "registrants": 6720,
-      "registrants_local": 334,
+      "registrants": 6828,
+      "registrants_local": 336,
       "registrants_handicapped": 9,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 6705,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 77093,
@@ -622,13 +622,13 @@
       "developer": "א. י. אמריקה ישראל להשקעות בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/77093/2682/ProjectInfo",
-      "registrants": 17149,
-      "registrants_local": 2275,
+      "registrants": 17373,
+      "registrants_local": 2291,
       "registrants_handicapped": 11,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 17112,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 77092,
@@ -654,13 +654,13 @@
       "developer": "מזמור (אזולאי) לדוד קרית השרון בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/77092/2683/ProjectInfo",
-      "registrants": 16679,
-      "registrants_local": 2222,
+      "registrants": 16900,
+      "registrants_local": 2239,
       "registrants_handicapped": 11,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 16642,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 77091,
@@ -686,13 +686,13 @@
       "developer": "שי-חי יזמות והשקעות בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/77091/2681/ProjectInfo",
-      "registrants": 17013,
-      "registrants_local": 2236,
+      "registrants": 17236,
+      "registrants_local": 2251,
       "registrants_handicapped": 11,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 16974,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 77090,
@@ -718,13 +718,13 @@
       "developer": "יורו אסטייט גרופ בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/77090/2684/ProjectInfo",
-      "registrants": 16542,
-      "registrants_local": 2212,
+      "registrants": 16761,
+      "registrants_local": 2229,
       "registrants_handicapped": 11,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 16505,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 79506,
@@ -750,13 +750,13 @@
       "developer": "עמרם אברהם חברה לבנין בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/79506/2728/ProjectInfo",
-      "registrants": 6245,
-      "registrants_local": 439,
+      "registrants": 6328,
+      "registrants_local": 446,
       "registrants_handicapped": 4,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 6238,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 79444,
@@ -782,13 +782,13 @@
       "developer": "יורו אסטייט בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/79444/2729/ProjectInfo",
-      "registrants": 4639,
-      "registrants_local": 621,
+      "registrants": 4693,
+      "registrants_local": 625,
       "registrants_handicapped": 1,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 4636,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 74584,
@@ -814,13 +814,13 @@
       "developer": "ע.פ. עראבי הצפון לבניה בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/74584/2736/ProjectInfo",
-      "registrants": 1414,
-      "registrants_local": 383,
+      "registrants": 1422,
+      "registrants_local": 390,
       "registrants_handicapped": 8,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 1413,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 74583,
@@ -846,13 +846,13 @@
       "developer": "סוהיל יזמות מנדא 2025 בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/74583/2737/ProjectInfo",
-      "registrants": 1354,
+      "registrants": 1357,
       "registrants_local": 385,
       "registrants_handicapped": 9,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 1353,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 79963,
@@ -878,13 +878,13 @@
       "developer": "גיא דורון לוי הנדסה בנייה והשקעות",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/79963/2691/ProjectInfo",
-      "registrants": 29372,
-      "registrants_local": 2123,
+      "registrants": 29726,
+      "registrants_local": 2142,
       "registrants_handicapped": 15,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 29322,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 79962,
@@ -910,13 +910,13 @@
       "developer": "רמי שבירו הנדסה בניה והשקעות בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/79962/2689/ProjectInfo",
-      "registrants": 29561,
-      "registrants_local": 2146,
+      "registrants": 29913,
+      "registrants_local": 2165,
       "registrants_handicapped": 15,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 29510,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 78385,
@@ -942,13 +942,13 @@
       "developer": "עמרם אברהם חברה לבנין בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/78385/2687/ProjectInfo",
-      "registrants": 29323,
-      "registrants_local": 2122,
+      "registrants": 29671,
+      "registrants_local": 2141,
       "registrants_handicapped": 14,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 29272,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 78387,
@@ -974,13 +974,13 @@
       "developer": "רמי שבירו הנדסה בניה והשקעות בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/78387/2686/ProjectInfo",
-      "registrants": 29280,
-      "registrants_local": 2124,
+      "registrants": 29626,
+      "registrants_local": 2143,
       "registrants_handicapped": 13,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 29229,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 78386,
@@ -1006,13 +1006,13 @@
       "developer": "יורו אסטייט גרופ בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/78386/2693/ProjectInfo",
-      "registrants": 28759,
-      "registrants_local": 2084,
+      "registrants": 29105,
+      "registrants_local": 2103,
       "registrants_handicapped": 13,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 28709,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 78390,
@@ -1038,13 +1038,13 @@
       "developer": "מרכז תבורי פרדס חנה בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/78390/2695/ProjectInfo",
-      "registrants": 28657,
-      "registrants_local": 2080,
+      "registrants": 29002,
+      "registrants_local": 2099,
       "registrants_handicapped": 13,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 28607,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 79959,
@@ -1070,13 +1070,13 @@
       "developer": "מגידו י.ק. יזום בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/79959/2688/ProjectInfo",
-      "registrants": 29015,
-      "registrants_local": 2104,
+      "registrants": 29359,
+      "registrants_local": 2123,
       "registrants_handicapped": 13,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 28965,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 79957,
@@ -1102,13 +1102,13 @@
       "developer": "יורו אסטייט גרופ בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/79957/2692/ProjectInfo",
-      "registrants": 28812,
-      "registrants_local": 2086,
+      "registrants": 29159,
+      "registrants_local": 2105,
       "registrants_handicapped": 14,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 28762,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 79961,
@@ -1134,13 +1134,13 @@
       "developer": "ניר רם הנדסה ובניה בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/79961/2694/ProjectInfo",
-      "registrants": 28660,
-      "registrants_local": 2084,
+      "registrants": 29004,
+      "registrants_local": 2103,
       "registrants_handicapped": 13,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 28610,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 79960,
@@ -1166,13 +1166,13 @@
       "developer": "רן-אור הנדסה בניה והשקעות בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/79960/2690/ProjectInfo",
-      "registrants": 28911,
-      "registrants_local": 2096,
+      "registrants": 29259,
+      "registrants_local": 2115,
       "registrants_handicapped": 14,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 28861,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 79958,
@@ -1198,13 +1198,13 @@
       "developer": "אלמוג (כ. ד. א. י.) בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/79958/2685/ProjectInfo",
-      "registrants": 28532,
-      "registrants_local": 2054,
+      "registrants": 28862,
+      "registrants_local": 2072,
       "registrants_handicapped": 15,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 28483,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 79647,
@@ -1230,13 +1230,13 @@
       "developer": "גזית נדל\"ן בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/79647/2739/ProjectInfo",
-      "registrants": 14421,
-      "registrants_local": 485,
+      "registrants": 14629,
+      "registrants_local": 490,
       "registrants_handicapped": 5,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 14402,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 79646,
@@ -1262,13 +1262,13 @@
       "developer": "יורו אסטייט גרופ בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/79646/2740/ProjectInfo",
-      "registrants": 14243,
-      "registrants_local": 483,
+      "registrants": 14445,
+      "registrants_local": 488,
       "registrants_handicapped": 6,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 14224,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 79644,
@@ -1294,13 +1294,13 @@
       "developer": "בסט ייזום בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/79644/2738/ProjectInfo",
-      "registrants": 14563,
-      "registrants_local": 471,
+      "registrants": 14769,
+      "registrants_local": 476,
       "registrants_handicapped": 5,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 14544,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 79645,
@@ -1326,13 +1326,13 @@
       "developer": "אסיה סיירוס פיתוח וייזום בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/79645/2741/ProjectInfo",
-      "registrants": 14193,
-      "registrants_local": 483,
+      "registrants": 14397,
+      "registrants_local": 488,
       "registrants_handicapped": 5,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 14174,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 79286,
@@ -1358,13 +1358,13 @@
       "developer": "עמרם אברהם חברה לבנין בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/79286/2712/ProjectInfo",
-      "registrants": 14186,
-      "registrants_local": 1546,
+      "registrants": 14479,
+      "registrants_local": 1565,
       "registrants_handicapped": 12,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 14156,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 79294,
@@ -1390,13 +1390,13 @@
       "developer": "שובל ברוך יזמות בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/79294/2713/ProjectInfo",
-      "registrants": 14226,
-      "registrants_local": 1565,
+      "registrants": 14521,
+      "registrants_local": 1583,
       "registrants_handicapped": 11,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 14197,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 79291,
@@ -1422,13 +1422,13 @@
       "developer": "עמרם אברהם חברה לבנין בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/79291/2714/ProjectInfo",
-      "registrants": 14173,
-      "registrants_local": 1553,
+      "registrants": 14471,
+      "registrants_local": 1572,
       "registrants_handicapped": 11,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 14142,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 78675,
@@ -1454,13 +1454,13 @@
       "developer": "בניחותא בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/78675/2715/ProjectInfo",
-      "registrants": 14107,
-      "registrants_local": 1553,
+      "registrants": 14400,
+      "registrants_local": 1572,
       "registrants_handicapped": 11,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 14076,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 79292,
@@ -1486,13 +1486,13 @@
       "developer": "בניחותא בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/79292/2716/ProjectInfo",
-      "registrants": 14065,
-      "registrants_local": 1543,
+      "registrants": 14360,
+      "registrants_local": 1562,
       "registrants_handicapped": 11,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 14034,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 79288,
@@ -1518,13 +1518,13 @@
       "developer": "אפי קפיטל ומיכמן השקעות בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/79288/2717/ProjectInfo",
-      "registrants": 14071,
-      "registrants_local": 1540,
+      "registrants": 14368,
+      "registrants_local": 1559,
       "registrants_handicapped": 11,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 14040,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 78673,
@@ -1550,13 +1550,13 @@
       "developer": "אס אי אס (ש.נ.ח) נדל\"ן בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/78673/2718/ProjectInfo",
-      "registrants": 14042,
-      "registrants_local": 1544,
+      "registrants": 14340,
+      "registrants_local": 1563,
       "registrants_handicapped": 11,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 14012,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 78676,
@@ -1582,13 +1582,13 @@
       "developer": "פמה חברה להשקעות ונכסים בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/78676/2719/ProjectInfo",
-      "registrants": 14048,
-      "registrants_local": 1542,
+      "registrants": 14342,
+      "registrants_local": 1560,
       "registrants_handicapped": 11,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": 14017,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 79284,
@@ -1614,13 +1614,13 @@
       "developer": "שובל ברוך יזמות בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/79284/2720/ProjectInfo",
-      "registrants": 14033,
-      "registrants_local": 1546,
+      "registrants": 14325,
+      "registrants_local": 1566,
       "registrants_handicapped": 11,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": null,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 79293,
@@ -1646,13 +1646,13 @@
       "developer": "בניחותא בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/79293/2721/ProjectInfo",
-      "registrants": 12757,
-      "registrants_local": 1468,
+      "registrants": 13023,
+      "registrants_local": 1488,
       "registrants_handicapped": 9,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": null,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 78672,
@@ -1678,13 +1678,13 @@
       "developer": "קוטלר עדיקא חברה לבניה בעמ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/78672/2722/ProjectInfo",
-      "registrants": 12772,
-      "registrants_local": 1480,
+      "registrants": 13034,
+      "registrants_local": 1500,
       "registrants_handicapped": 9,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": null,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 78674,
@@ -1710,13 +1710,13 @@
       "developer": "א.ל.ח.ה משכן בבני עיש",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/78674/2723/ProjectInfo",
-      "registrants": 12723,
-      "registrants_local": 1468,
+      "registrants": 12987,
+      "registrants_local": 1488,
       "registrants_handicapped": 9,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": null,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 79285,
@@ -1742,13 +1742,13 @@
       "developer": "עמרם אברהם חברה לבנין בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/79285/2724/ProjectInfo",
-      "registrants": 12760,
-      "registrants_local": 1475,
+      "registrants": 13023,
+      "registrants_local": 1495,
       "registrants_handicapped": 9,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": null,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 79283,
@@ -1774,13 +1774,13 @@
       "developer": "פיקהולץ החזקות בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/79283/2725/ProjectInfo",
-      "registrants": 12708,
-      "registrants_local": 1469,
+      "registrants": 12972,
+      "registrants_local": 1489,
       "registrants_handicapped": 9,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": null,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 79289,
@@ -1806,13 +1806,13 @@
       "developer": "קוטלר עדיקא חברה לבניה בעמ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/79289/2726/ProjectInfo",
-      "registrants": 12716,
-      "registrants_local": 1474,
+      "registrants": 12980,
+      "registrants_local": 1494,
       "registrants_handicapped": 9,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": null,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 79290,
@@ -1838,13 +1838,13 @@
       "developer": "חמדת שומרון - יזמות בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/79290/2727/ProjectInfo",
-      "registrants": 12713,
-      "registrants_local": 1469,
+      "registrants": 12975,
+      "registrants_local": 1489,
       "registrants_handicapped": 9,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": null,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 71008,
@@ -1870,13 +1870,13 @@
       "developer": "ספייס בניה וייזמות בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/71008/2709/ProjectInfo",
-      "registrants": 10241,
-      "registrants_local": 1488,
+      "registrants": 10342,
+      "registrants_local": 1501,
       "registrants_handicapped": 7,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": null,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 78337,
@@ -1902,13 +1902,13 @@
       "developer": "דקלי פסגות יזמות בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/78337/2710/ProjectInfo",
-      "registrants": 9987,
-      "registrants_local": 1487,
+      "registrants": 10089,
+      "registrants_local": 1499,
       "registrants_handicapped": 5,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": null,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 76894,
@@ -1934,13 +1934,13 @@
       "developer": "שחק גרופ י.מ יזמות נדל\"ן בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/76894/2735/ProjectInfo",
-      "registrants": 17812,
-      "registrants_local": 681,
+      "registrants": 18028,
+      "registrants_local": 689,
       "registrants_handicapped": 5,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": null,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 62833,
@@ -1966,13 +1966,13 @@
       "developer": "מזמור (אזולאי) לדוד קרית השרון בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/62833/2732/ProjectInfo",
-      "registrants": 17823,
-      "registrants_local": 678,
+      "registrants": 18038,
+      "registrants_local": 686,
       "registrants_handicapped": 5,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": null,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 76891,
@@ -1998,13 +1998,13 @@
       "developer": "בוני ישראל יזמות ואחזקה בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/76891/2733/ProjectInfo",
-      "registrants": 17798,
-      "registrants_local": 678,
+      "registrants": 18014,
+      "registrants_local": 686,
       "registrants_handicapped": 5,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": null,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 62835,
@@ -2030,13 +2030,13 @@
       "developer": "שניר לוי יזמות בנייה והשקעות ב",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/62835/2734/ProjectInfo",
-      "registrants": 17730,
-      "registrants_local": 675,
+      "registrants": 17943,
+      "registrants_local": 683,
       "registrants_handicapped": 5,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": null,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 76895,
@@ -2062,13 +2062,13 @@
       "developer": "שמואל ברוך יזמות ובניה בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/76895/2731/ProjectInfo",
-      "registrants": 17788,
-      "registrants_local": 668,
+      "registrants": 17999,
+      "registrants_local": 676,
       "registrants_handicapped": 5,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": null,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 76892,
@@ -2094,13 +2094,13 @@
       "developer": "מרכז תבורי פרדס חנה בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/76892/2730/ProjectInfo",
-      "registrants": 17796,
-      "registrants_local": 664,
+      "registrants": 18014,
+      "registrants_local": 672,
       "registrants_handicapped": 5,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": null,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 78277,
@@ -2126,13 +2126,13 @@
       "developer": "בראל א.ב. הנדסה ובנייה בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/78277/2696/ProjectInfo",
-      "registrants": 19178,
-      "registrants_local": 821,
+      "registrants": 19492,
+      "registrants_local": 829,
       "registrants_handicapped": 10,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": null,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 78271,
@@ -2158,13 +2158,13 @@
       "developer": "אחים אוזן חברה לבניה בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/78271/2699/ProjectInfo",
-      "registrants": 19128,
-      "registrants_local": 821,
+      "registrants": 19436,
+      "registrants_local": 829,
       "registrants_handicapped": 7,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": null,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 78281,
@@ -2190,13 +2190,13 @@
       "developer": "אפי קפיטל מדף 5 בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/78281/2700/ProjectInfo",
-      "registrants": 19048,
-      "registrants_local": 814,
+      "registrants": 19352,
+      "registrants_local": 823,
       "registrants_handicapped": 7,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": null,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 78283,
@@ -2222,13 +2222,13 @@
       "developer": "שמואל ברוך בונה הארץ בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/78283/2705/ProjectInfo",
-      "registrants": 18918,
-      "registrants_local": 802,
+      "registrants": 19223,
+      "registrants_local": 811,
       "registrants_handicapped": 7,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": null,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 78275,
@@ -2254,13 +2254,13 @@
       "developer": "רייסדור יזמות בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/78275/2697/ProjectInfo",
-      "registrants": 19241,
-      "registrants_local": 844,
+      "registrants": 19555,
+      "registrants_local": 853,
       "registrants_handicapped": 10,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": null,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 78268,
@@ -2286,13 +2286,13 @@
       "developer": "ורדים אדר בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/78268/2708/ProjectInfo",
-      "registrants": 18864,
-      "registrants_local": 795,
+      "registrants": 19172,
+      "registrants_local": 804,
       "registrants_handicapped": 8,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": null,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 78280,
@@ -2318,13 +2318,13 @@
       "developer": "ליאל יוזמה והשקעות בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/78280/2707/ProjectInfo",
-      "registrants": 18824,
-      "registrants_local": 793,
+      "registrants": 19132,
+      "registrants_local": 802,
       "registrants_handicapped": 7,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": null,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 78286,
@@ -2350,13 +2350,13 @@
       "developer": "סלם יעקב א.י. השקעות ונכסים בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/78286/2706/ProjectInfo",
-      "registrants": 18826,
-      "registrants_local": 797,
+      "registrants": 19132,
+      "registrants_local": 806,
       "registrants_handicapped": 7,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": null,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 78284,
@@ -2382,13 +2382,13 @@
       "developer": "יהלום ע.ש בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/78284/2698/ProjectInfo",
-      "registrants": 19036,
-      "registrants_local": 821,
+      "registrants": 19341,
+      "registrants_local": 830,
       "registrants_handicapped": 8,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": null,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 79505,
@@ -2414,13 +2414,13 @@
       "developer": "ראם פרץ יזמות ונדל\"ן בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/79505/2674/ProjectInfo",
-      "registrants": 18994,
-      "registrants_local": 4628,
+      "registrants": 19183,
+      "registrants_local": 4675,
       "registrants_handicapped": 8,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": null,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 73587,
@@ -2446,13 +2446,13 @@
       "developer": "פרשקובסקי השקעות ובניין בע\"מ",
       "lottery_status": "החלטת ועדה (היתר בתנאים)",
       "source_url": "https://www.dira.moch.gov.il/73587/2673/ProjectInfo",
-      "registrants": 19449,
-      "registrants_local": 4682,
+      "registrants": 19656,
+      "registrants_local": 4729,
       "registrants_handicapped": 7,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": null,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 73362,
@@ -2478,13 +2478,13 @@
       "developer": "פרץ בוני הנגב (1993) בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/73362/2680/ProjectInfo",
-      "registrants": 6640,
-      "registrants_local": 1524,
+      "registrants": 6720,
+      "registrants_local": 1536,
       "registrants_handicapped": 7,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": null,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 78391,
@@ -2510,13 +2510,13 @@
       "developer": "שובל מתחמי מגורים בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/78391/2745/ProjectInfo",
-      "registrants": 7583,
-      "registrants_local": 307,
+      "registrants": 7766,
+      "registrants_local": 310,
       "registrants_handicapped": 2,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": null,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 78392,
@@ -2542,13 +2542,13 @@
       "developer": "וייס בולטהאופ התחדשות עירונית בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/78392/2743/ProjectInfo",
-      "registrants": 7555,
-      "registrants_local": 304,
+      "registrants": 7736,
+      "registrants_local": 307,
       "registrants_handicapped": 2,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": null,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 78393,
@@ -2574,13 +2574,13 @@
       "developer": "עמרם אברהם חברה לבנין בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/78393/2742/ProjectInfo",
-      "registrants": 7700,
-      "registrants_local": 305,
+      "registrants": 7881,
+      "registrants_local": 308,
       "registrants_handicapped": 2,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": null,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 78394,
@@ -2606,13 +2606,13 @@
       "developer": "שי-חי יזמות והשקעות בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/78394/2744/ProjectInfo",
-      "registrants": 7523,
-      "registrants_local": 305,
+      "registrants": 7704,
+      "registrants_local": 308,
       "registrants_handicapped": 2,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": null,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     },
     {
       "project_id": 78395,
@@ -2638,13 +2638,13 @@
       "developer": "סלם יעקב א.י. השקעות ונכסים בע\"מ",
       "lottery_status": "טרם הוגשה בקשה להיתר",
       "source_url": "https://www.dira.moch.gov.il/78395/2746/ProjectInfo",
-      "registrants": 7545,
-      "registrants_local": 307,
+      "registrants": 7727,
+      "registrants_local": 310,
       "registrants_handicapped": 2,
       "registrants_reserve_duty": 0,
       "registrants_combat": 0,
       "participants_count": null,
-      "scraped_at": "2026-06-15T03:43:03Z"
+      "scraped_at": "2026-06-15T17:08:57Z"
     }
   ]
 }
