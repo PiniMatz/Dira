@@ -675,6 +675,7 @@ button {
 .discount-mid  { color: var(--yellow); }
 .discount-low  { color: var(--muted); }
 .days-urgent { color: var(--red); font-weight: 700; }
+.days-drawn  { color: var(--indigo); font-weight: 600; }
 .days-soon   { color: var(--yellow); }
 
 .empty-state {

@@ -16,6 +16,7 @@ let filterCities = new Set();
 let filterReservist = false;
 let filterNoReligious = false;
 let filterMaxDays = null;
+let filterOnlyRecent = true;
 
 // User Profile settings (local storage persistent)
 let userIsReservist = true;
@@ -294,7 +295,19 @@ function daysClass(d) {
 
 // ── Filter + sort lotteries ────────────────────────────────────────────────────
 function filteredLotteries() {
+  let maxEndDate = '';
+  if (allLotteries.length > 0) {
+    maxEndDate = allLotteries.reduce((max, l) => {
+      if (!l.signup_end_date) return max;
+      return l.signup_end_date > max ? l.signup_end_date : max;
+    }, '');
+  }
+
   return allLotteries.filter(l => {
+    if (filterOnlyRecent) {
+      const isFutureOrLatest = !l.signup_end_date || l.signup_end_date >= maxEndDate || new Date(l.signup_end_date) >= Date.now();
+      if (!isFutureOrLatest) return false;
+    }
     if (filterCities.size > 0 && !filterCities.has(l.city)) return false;
     if (filterReservist && !(l.reserve_active_units > 0)) return false;
     if (filterNoReligious && l.is_religious) return false;
@@ -332,7 +345,10 @@ function renderLotteries() {
   tbody.innerHTML = lots.map(l => {
     const { pini, baseline } = computeOdds(l, sliderP);
     const disc = discountPct(l);
-    const days = daysToClose(l);
+    const isDrawn = !!l.lottery_date;
+    const days = isDrawn ? null : daysToClose(l);
+    const daysText = isDrawn ? `הוגרלה (${l.lottery_date.slice(5, 10)})` : (days ?? '—');
+    const daysCellClass = isDrawn ? 'days-drawn' : daysClass(days);
     const N    = l.participants_count ?? l.registrants;
     return `<tr data-pid="${l.project_id}" data-lid="${l.lottery_id}">
       <td>
@@ -346,7 +362,7 @@ function renderLotteries() {
       <td>${fmt.price(l.price_per_meter)}</td>
       <td class="${discountClass(disc)}">${fmt.pct(disc)}</td>
       <td>${fmt.num(N)}</td>
-      <td class="${daysClass(days)}">${days ?? '—'}</td>
+      <td class="${daysCellClass}">${daysText}</td>
     </tr>`;
   }).join('');
 
@@ -535,13 +551,14 @@ function openRowPanel(pid, lid) {
 
     <div class="row-section">
       <div class="row-section-label">רישום</div>
-      ${field('רשומים סה״כ', fmt.num(N))}
+      ${field(l.lottery_date ? 'רשומים סה״כ (סופי)' : 'רשומים סה״כ', fmt.num(N))}
       ${field('רשומים זכאים (משוער)', fmt.num(N_eligible))}
-      ${field('מתחרי מילואים (מוערך)', fmt.num(R_reservist))}
-      ${field('מקומיים רשומים', fmt.num(l.registrants_local))}
+      ${l.registrants_reserve_duty > 0 ? field('מתחרי מילואים (בפועל)', fmt.num(l.registrants_reserve_duty)) : field('מתחרי מילואים (מוערך)', fmt.num(R_reservist))}
+      ${l.registrants_combat > 0 ? field('מילואים לוחמים (בפועל)', fmt.num(l.registrants_combat)) : ''}
+      ${field(l.lottery_date ? 'מקומיים רשומים (סופי)' : 'מקומיים רשומים', fmt.num(l.registrants_local))}
       ${field('מקומיים זכאים (משוער)', fmt.num(N_local_eligible))}
-      ${field('ימים לסגירה', days ?? '—')}
-      ${field('תאריך סיום', l.signup_end_date ? l.signup_end_date.slice(0,10) : '—')}
+      ${l.lottery_date ? field('סטטוס הגרלה', 'הוגרלה 🎉') : field('ימים לסגירה', days ?? '—')}
+      ${l.lottery_date ? field('תאריך הגרלה', l.lottery_date.replace('T', ' ').slice(0, 16)) : field('תאריך סיום', l.signup_end_date ? l.signup_end_date.slice(0,10) : '—')}
     </div>
 
     <div class="row-section">
@@ -1048,6 +1065,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Checkboxes
+  document.getElementById('filter-recent').addEventListener('change', e => {
+    filterOnlyRecent = e.target.checked;
+    renderLotteries();
+  });
   document.getElementById('filter-reservist').addEventListener('change', e => {
     filterReservist = e.target.checked;
     renderLotteries();
@@ -1065,8 +1086,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Clear filters
   document.getElementById('clear-filters').addEventListener('click', () => {
-    filterCities.clear(); filterReservist = false; filterNoReligious = false; filterMaxDays = null;
+    filterCities.clear(); filterReservist = false; filterNoReligious = false; filterMaxDays = null; filterOnlyRecent = true;
     document.querySelectorAll('.city-chip').forEach(b => b.classList.remove('active'));
+    document.getElementById('filter-recent').checked = true;
     document.getElementById('filter-reservist').checked = false;
     document.getElementById('filter-no-religious').checked = false;
     document.getElementById('filter-days').value = '';

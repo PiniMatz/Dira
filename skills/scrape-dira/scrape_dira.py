@@ -104,6 +104,7 @@ MIGRATION_COLUMNS = {
         ("contractor_win_lot_date", "TEXT"),
         ("contractor_email", "TEXT"),
         ("contractor_phone", "TEXT"),
+        ("lottery_date", "TEXT"),
     ],
     "registration_snapshots": [
         ("registrants_local", "INTEGER"),
@@ -131,16 +132,19 @@ def _get(url):
     return json.loads(body)
 
 
-def fetch_open_lotteries():
+def fetch_lotteries_by_status(status, page_size=200):
     param = quote(
-        "?firstApplicantIdentityNumber=&secondApplicantIdentityNumber="
-        "&ProjectStatus=4&Entitlement=1&PageNumber=1&PageSize=200&IsInit=true&",
+        f"?firstApplicantIdentityNumber=&secondApplicantIdentityNumber="
+        f"&ProjectStatus={status}&Entitlement=1&PageNumber=1&PageSize={page_size}&IsInit=true&",
         safe="",
     )
-    data = _get(f"{BASE_URL}/api/Invoker?method=Projects&param={param}")
-    if data.get("ActionStatus") != 1:
-        raise RuntimeError(f"Projects API error: ActionStatus={data.get('ActionStatus')}")
-    return data.get("ProjectItems", [])
+    try:
+        data = _get(f"{BASE_URL}/api/Invoker?method=Projects&param={param}")
+        if data and data.get("ActionStatus") == 1:
+            return data.get("ProjectItems", [])
+    except Exception as e:
+        print(f"Error fetching status {status}: {e}")
+    return []
 
 
 def fetch_participants_count(project_id, lottery_id):
@@ -283,23 +287,107 @@ def upsert_lottery(conn, item, participants_count, now):
     return project_id, lottery_id
 
 
+def update_completed_lottery_dates(conn, now):
+    # Find all closed lotteries in DB that don't have lottery_date
+    # Limit to 30 to avoid rate limits
+    rows = conn.execute("""
+        SELECT project_id, lottery_id, city, neighborhood
+        FROM lotteries
+        WHERE signup_end_date <= ? AND lottery_date IS NULL
+        ORDER BY signup_end_date DESC
+        LIMIT 30
+    """, (now,)).fetchall()
+
+    if not rows:
+        return
+
+    print(f"Checking {len(rows)} closed lotteries for execution dates...")
+    updated_count = 0
+    for r in rows:
+        pid, lid = r[0], r[1]
+        try:
+            param = quote(f"?ProjectNumber={pid}&LotteryNumber={lid}&", safe="")
+            data = _get(f"{BASE_URL}/api/Invoker?method=LotteryResult&param={param}")
+            result = data.get("MyLotteryResult") or {}
+            lot_date = result.get("LotteryDate")
+            part_count = result.get("ParticipantsCount")
+            if lot_date:
+                # Update lottery_date and lottery_status
+                conn.execute("""
+                    UPDATE lotteries
+                    SET lottery_date = ?, lottery_status = 'פורסמו תוצאות'
+                    WHERE project_id = ? AND lottery_id = ?
+                """, (lot_date, pid, lid))
+                
+                # Update participants_count in the latest snapshot
+                if part_count:
+                    conn.execute("""
+                        UPDATE registration_snapshots
+                        SET participants_count = ?
+                        WHERE project_id = ? AND lottery_id = ?
+                        AND scraped_at = (
+                            SELECT MAX(scraped_at)
+                            FROM registration_snapshots
+                            WHERE project_id = ? AND lottery_id = ?
+                        )
+                    """, (part_count, pid, lid, pid, lid))
+                
+                print(f"  Lottery {lid} ({r[2]}): drawn on {lot_date}, participants: {part_count}")
+                updated_count += 1
+        except Exception as e:
+            print(f"  Error checking lottery {lid}: {e}")
+    
+    print(f"Updated {updated_count} lottery execution dates.")
+
+
 def main():
     now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-    print(f"Fetching open lotteries from {BASE_URL} ...")
-    items = fetch_open_lotteries()
-    print(f"Got {len(items)} open lotteries — fetching verified participant counts ...")
+    
+    print(f"Fetching open lotteries (status 4) from {BASE_URL} ...")
+    items = fetch_lotteries_by_status(4)
+    print(f"  Got {len(items)} open lotteries")
+
+    print(f"Fetching recently closed lotteries (status 3) from {BASE_URL} ...")
+    closed_items = fetch_lotteries_by_status(3)
+    print(f"  Got {len(closed_items)} closed lotteries")
+    items.extend(closed_items)
+
+    print(f"Fetching recently drawn lotteries (status 5) from {BASE_URL} ...")
+    drawn_items = fetch_lotteries_by_status(5)
+    print(f"  Got {len(drawn_items)} drawn lotteries")
+    items.extend(drawn_items)
+
+    # De-duplicate by (ProjectNumber, LotteryNumber)
+    unique_items = {}
+    for item in items:
+        key = (int(item["ProjectNumber"]), int(item["LotteryNumber"]))
+        unique_items[key] = item
+    items = list(unique_items.values())
+    print(f"Total unique lotteries fetched: {len(items)}")
 
     conn = open_db()
+    # Get set of already drawn lottery IDs to skip redundant scrapes
+    drawn_keys = {
+        (row[0], row[1])
+        for row in conn.execute("SELECT project_id, lottery_id FROM lotteries WHERE lottery_date IS NOT NULL").fetchall()
+    }
+
     scraped, failed = [], []
     for item in items:
-        pid = item.get("ProjectNumber")
-        lid = item.get("LotteryNumber")
-        participants_count = fetch_participants_count(pid, lid)
+        pid = int(item.get("ProjectNumber"))
+        lid = int(item.get("LotteryNumber"))
+        if (pid, lid) in drawn_keys:
+            continue
         try:
-            upsert_lottery(conn, item, participants_count, now)
-            scraped.append((int(pid), int(lid)))
+            upsert_lottery(conn, item, None, now)
+            scraped.append((pid, lid))
         except Exception as e:
             failed.append({"project": pid, "lottery": lid, "error": str(e)})
+
+    print(f"Scraped/updated {len(scraped)} active or recently closed lotteries.")
+
+    # Query and update drawing dates for recently closed lotteries
+    update_completed_lottery_dates(conn, now)
 
     conn.commit()
     conn.close()
