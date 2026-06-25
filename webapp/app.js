@@ -347,8 +347,20 @@ function renderLotteries() {
     const disc = discountPct(l);
     const isDrawn = !!l.lottery_date;
     const days = isDrawn ? null : daysToClose(l);
-    const daysText = isDrawn ? `הוגרלה (${l.lottery_date.slice(5, 10)})` : (days ?? '—');
-    const daysCellClass = isDrawn ? 'days-drawn' : daysClass(days);
+    let daysText = '—';
+    let daysCellClass = '';
+    if (isDrawn) {
+      daysText = `הוגרלה (${l.lottery_date.slice(5, 10)})`;
+      daysCellClass = 'days-drawn';
+    } else if (days !== null) {
+      if (days < 0) {
+        daysText = 'הרשמה נסגרה';
+        daysCellClass = 'days-closed';
+      } else {
+        daysText = days;
+        daysCellClass = daysClass(days);
+      }
+    }
     const N    = l.participants_count ?? l.registrants;
     return `<tr data-pid="${l.project_id}" data-lid="${l.lottery_id}">
       <td>
