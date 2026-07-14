@@ -253,6 +253,21 @@ const fmt = {
   pct:    v => v == null ? '—'  : (v * 100).toFixed(1) + '%',
   price:  v => v == null ? '—'  : '₪' + Math.round(v).toLocaleString(),
   num:    v => v == null ? '—'  : v.toLocaleString(),
+  date:   dStr => {
+    if (!dStr) return '—';
+    const y = dStr.slice(2, 4);
+    const m = dStr.slice(5, 7);
+    const d = dStr.slice(8, 10);
+    return `${d}/${m}/${y}`;
+  },
+  dateTime: dtStr => {
+    if (!dtStr) return '—';
+    const y = dtStr.slice(2, 4);
+    const m = dtStr.slice(5, 7);
+    const d = dtStr.slice(8, 10);
+    const time = dtStr.slice(11, 16);
+    return `${d}/${m}/${y} ${time}`;
+  },
   shortPrice: v => {
     if (v == null || isNaN(v)) return '—';
     if (v >= 1000000) {
@@ -350,7 +365,7 @@ function renderLotteries() {
     let daysText = '—';
     let daysCellClass = '';
     if (isDrawn) {
-      daysText = `הוגרלה (${l.lottery_date.slice(5, 10)})`;
+      daysText = `הוגרלה (${fmt.date(l.lottery_date)})`;
       daysCellClass = 'days-drawn';
     } else if (days !== null) {
       if (days < 0) {
@@ -580,7 +595,7 @@ function openRowPanel(pid, lid) {
       ${field(l.lottery_date ? 'מקומיים רשומים (סופי)' : 'מקומיים רשומים', fmt.num(l.registrants_local))}
       ${field('מקומיים זכאים (משוער)', fmt.num(N_local_eligible))}
       ${l.lottery_date ? field('סטטוס הגרלה', 'הוגרלה 🎉') : field('ימים לסגירה', days ?? '—')}
-      ${l.lottery_date ? field('תאריך הגרלה', l.lottery_date.replace('T', ' ').slice(0, 16)) : field('תאריך סיום', l.signup_end_date ? l.signup_end_date.slice(0,10) : '—')}
+      ${l.lottery_date ? field('תאריך הגרלה', fmt.dateTime(l.lottery_date)) : field('תאריך סיום', fmt.date(l.signup_end_date))}
     </div>
 
     <div class="row-section">
