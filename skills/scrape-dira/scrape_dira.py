@@ -63,6 +63,8 @@ CREATE TABLE IF NOT EXISTS lotteries (
   lot_delivery_date         TEXT,
   contractor_win_lot_date   TEXT,
   source_url                TEXT,
+  lottery_date              TEXT,
+  last_checked              TEXT,
   first_seen                TEXT NOT NULL DEFAULT (datetime('now')),
   last_seen                 TEXT NOT NULL DEFAULT (datetime('now')),
   PRIMARY KEY (project_id, lottery_id)
@@ -105,6 +107,7 @@ MIGRATION_COLUMNS = {
         ("contractor_email", "TEXT"),
         ("contractor_phone", "TEXT"),
         ("lottery_date", "TEXT"),
+        ("last_checked", "TEXT"),
     ],
     "registration_snapshots": [
         ("registrants_local", "INTEGER"),
@@ -289,12 +292,13 @@ def upsert_lottery(conn, item, participants_count, now):
 
 def update_completed_lottery_dates(conn, now):
     # Find all closed lotteries in DB that don't have lottery_date
-    # Limit to 30 to avoid rate limits
+    # Order by last_checked ASC (so oldest checked or unchecked ones go first)
+    # and limit to 30 to avoid rate limits and rotate properly.
     rows = conn.execute("""
         SELECT project_id, lottery_id, city, neighborhood
         FROM lotteries
         WHERE signup_end_date <= ? AND lottery_date IS NULL
-        ORDER BY signup_end_date DESC
+        ORDER BY last_checked ASC, signup_end_date DESC
         LIMIT 30
     """, (now,)).fetchall()
 
@@ -306,6 +310,13 @@ def update_completed_lottery_dates(conn, now):
     for r in rows:
         pid, lid = r[0], r[1]
         try:
+            # Always update last_checked so we shift this lottery to the end of the queue
+            conn.execute("""
+                UPDATE lotteries
+                SET last_checked = ?
+                WHERE project_id = ? AND lottery_id = ?
+            """, (now, pid, lid))
+
             param = quote(f"?ProjectNumber={pid}&LotteryNumber={lid}&", safe="")
             data = _get(f"{BASE_URL}/api/Invoker?method=LotteryResult&param={param}")
             result = data.get("MyLotteryResult") or {}
@@ -334,6 +345,8 @@ def update_completed_lottery_dates(conn, now):
                 
                 print(f"  Lottery {lid} ({r[2]}): drawn on {lot_date}, participants: {part_count}")
                 updated_count += 1
+            else:
+                print(f"  Lottery {lid} ({r[2]}): checked, still no drawing date")
         except Exception as e:
             print(f"  Error checking lottery {lid}: {e}")
     

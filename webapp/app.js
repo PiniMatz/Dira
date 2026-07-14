@@ -354,15 +354,15 @@ function renderLotteries() {
       daysCellClass = 'days-drawn';
     } else if (days !== null) {
       if (days < 0) {
-        daysText = 'הרשמה נסגרה';
+        daysText = 'ממתין לתוצאות';
         daysCellClass = 'days-closed';
       } else {
         daysText = days;
         daysCellClass = daysClass(days);
       }
     }
-    const N    = l.participants_count ?? l.registrants;
-    return `<tr data-pid="${l.project_id}" data-lid="${l.lottery_id}">
+    const trClass = isDrawn ? 'row-drawn' : (days !== null && days < 0 ? 'row-closed' : '');
+    return `<tr class="${trClass}" onclick="openRowPanel(${l.project_id}, ${l.lottery_id})" data-pid="${l.project_id}" data-lid="${l.lottery_id}">
       <td>
         <div class="td-city">${l.city}${l.is_religious ? ' <span class="tag-religious">קהילתי</span>' : ''}</div>
         <div class="td-hood">${l.neighborhood || ''}</div>
@@ -373,7 +373,7 @@ function renderLotteries() {
       <td class="${oddsClass(baseline)}">${fmt.pct(baseline)}</td>
       <td>${fmt.price(l.price_per_meter)}</td>
       <td class="${discountClass(disc)}">${fmt.pct(disc)}</td>
-      <td>${fmt.num(N)}</td>
+      <td>${fmt.num(l.participants_count ?? l.registrants)}</td>
       <td class="${daysCellClass}">${daysText}</td>
     </tr>`;
   }).join('');
@@ -397,6 +397,16 @@ function updateSummaryStats() {
   const elBest = document.getElementById('stat-best-odds');
   const elDiscount = document.getElementById('stat-avg-discount');
   const elApts = document.getElementById('stat-reservist-apts');
+  
+  const anyOpen = lots.some(l => {
+    const d = daysToClose(l);
+    return d !== null && d >= 0 && !l.lottery_date;
+  });
+  
+  const elTotalLabel = document.querySelector('.stat-card:first-child .stat-label');
+  if (elTotalLabel) {
+    elTotalLabel.textContent = anyOpen ? 'הגרלות פתוחות' : 'הגרלות במעקב';
+  }
   
   if (elTotal) elTotal.textContent = fmt.num(count);
   if (elBest) elBest.textContent = fmt.pct(bestOdds);
